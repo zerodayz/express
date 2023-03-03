@@ -20,7 +20,7 @@ Run 'source .venv/bin/activate' to activate the virtual environment.
 Export the Python pytest from Selenium IDE and copy inside test folder.
 
 ```text
-cp exported/test_rusty.py express/test/
+cp exported/test_express.py express/test/
 ```
 
 ## Run the tests
