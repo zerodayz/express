@@ -23,13 +23,9 @@ Export the Python pytest from Selenium IDE and copy inside test folder.
 cp exported/test_rusty.py express/test/
 ```
 
-Add the folowing line above the test class:
-```python
-from src import express
-```
-
 ## How to use
 
+You can first run the tests with Selenium IDE and then with use Express library to simplify the tasks.
 ### Login with Selenium IDE
 This is what the login example would look like in the test file:
 
@@ -67,9 +63,6 @@ def test_express(actions, credentials):
     actions.password = credentials["password"]
 
     actions.login(url="http://127.0.0.1:8000/login", submit="css=.w3-button")
-
-    actions.take_screenshot("login.png")
-    actions.go("http://127.0.0.1:8000/logout")
 ```
 
 ### Taking screenshots
