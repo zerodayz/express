@@ -1,4 +1,25 @@
-# Express Framework for Selenium
+# EXP Framework for Selenium
+
+**Table of contents**
+
+<img src="doc/express.png" width="202" height="202" border=0 align="right">
+
+<!-- TOC depthfrom:1 insertanchor:false orderedlist:false -->
+
+- [Introduction](#introduction)
+- [Prepare the environment?](#prepare-the-environment)
+- [Combination with Selenium IDE](#combination-with-selenium-ide)
+- [Run the tests](#run-the-tests)
+- [Collaborate](#collaborate)
+- [Compatibility with Formy](#compatibility-with-formy)
+- [Documentation](#documentation)
+- [Contact us!!](#contact-us)
+
+<!-- /TOC -->
+
+## Introduction
+
+This is a framework for Selenium tests written in Python. It is based on Selenium and pytest.
 
 ## Prepare the environment
 
@@ -40,6 +61,8 @@ python -m pytest -s -n 8 --browser=chrome --browser=firefox test/test_express.py
 
 This can shorten the time of testings up to 3 times.
 
+## Collaborate
+
 ## Compatibility with Formy
 This is covering what tests are available and compatible with https://formy-project.herokuapp.com/.
 
@@ -58,7 +81,7 @@ This is covering what tests are available and compatible with https://formy-proj
 - [ ] Switch Window
 - [ ] Complete Web Form
 
-## How to use
+## Documentation
 
 You can first run the tests with Selenium IDE and then with use Express library to simplify the tests.
 
@@ -74,8 +97,6 @@ self.driver.find_element(By.NAME, "username").send_keys("demo")
 self.driver.find_element(By.NAME, "password").send_keys("demo")
 self.driver.find_element(By.CSS_SELECTOR, ".w3-button").click()
 ```
-
-## Functions
 
 ### Login with Express and JSON file
 ```python
@@ -114,3 +135,5 @@ Function `take_screenshot` can also take screenshot of an element as well the en
 ```python
 actions.take_screenshot("login.png", locator="css=#posts")
 ```
+
+## Contact us
