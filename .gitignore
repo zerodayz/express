@@ -1,0 +1,7 @@
+.idea
+.venv
+*.iml
+out
+.DS_Store
+test/__pycache__/
+src/__pycache__/
