@@ -40,9 +40,28 @@ python -m pytest -s -n 8 --browser=chrome --browser=firefox test/test_express.py
 
 This can shorten the time of testings up to 3 times.
 
+## Compatibility with Formy
+This is covering what tests are available and compatible with https://formy-project.herokuapp.com/.
+
+- [ ] Autocomplete
+- [ ] Buttons
+- [ ] Checkbox
+- [ ] Datepicker
+- [ ] Drag and Drop
+- [ ] Dropdown
+- [ ] Enabled and Disabled elements
+- [ ] File Upload
+- [ ] Key and Mouse press
+- [ ] Modal
+- [ ] Page Scroll
+- [ ] Radio Button
+- [ ] Switch Window
+- [ ] Complete Web Form
+
 ## How to use
 
-You can first run the tests with Selenium IDE and then with use Express library to simplify the tasks.
+You can first run the tests with Selenium IDE and then with use Express library to simplify the tests.
+
 ### Login with Selenium IDE
 This is what the login example would look like in the test file:
 
