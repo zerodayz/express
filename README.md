@@ -23,6 +23,23 @@ Export the Python pytest from Selenium IDE and copy inside test folder.
 cp exported/test_rusty.py express/test/
 ```
 
+## Run the tests
+
+Runs 4 tests in parallel with Chrome and Firefox browsers.
+
+```python
+python -m pytest -s -n 4 --browser=chrome --browser=firefox test/test_express.py
+```
+
+
+For example if you have 8 cores and 4 tests, you can run all tests for all browsers in parallel.
+
+```python
+python -m pytest -s -n 8 --browser=chrome --browser=firefox test/test_express.py
+```
+
+This can shorten the time of testings up to 3 times.
+
 ## How to use
 
 You can first run the tests with Selenium IDE and then with use Express library to simplify the tasks.
@@ -38,6 +55,8 @@ self.driver.find_element(By.NAME, "username").send_keys("demo")
 self.driver.find_element(By.NAME, "password").send_keys("demo")
 self.driver.find_element(By.CSS_SELECTOR, ".w3-button").click()
 ```
+
+## Functions
 
 ### Login with Express and JSON file
 ```python
