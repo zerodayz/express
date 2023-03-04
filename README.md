@@ -41,7 +41,7 @@ Run 'source .venv/bin/activate' to activate the virtual environment.
 Export the Python pytest from Selenium IDE and copy inside test folder.
 
 ```text
-cp exported/test_express.py express/test/
+cp exported/test_login.py express/test/
 ```
 
 ## Run the tests
@@ -49,14 +49,14 @@ cp exported/test_express.py express/test/
 Runs 4 tests in parallel with Chrome and Firefox browsers.
 
 ```python
-python -m pytest -s -n 4 --browser=chrome --browser=firefox test/test_express.py
+python -m pytest -s -n 4 --browser=chrome --browser=firefox test/test_login.py
 ```
 
 
 For example if you have 8 cores and 4 tests, you can run all tests for all browsers in parallel.
 
 ```python
-python -m pytest -s -n 8 --browser=chrome --browser=firefox test/test_express.py
+python -m pytest -s -n 8 --browser=chrome --browser=firefox test/test_login.py
 ```
 
 This can shorten the time of testings up to 3 times.
@@ -116,8 +116,8 @@ import pytest as pytest
         }
     ],
 )
-def test_express(actions, credentials):
-    actions.prepare_tests("test_express")
+def test_login(actions, credentials):
+    actions.prepare_tests("test_login")
     actions.username = credentials["username"]
     actions.password = credentials["password"]
 
@@ -125,7 +125,7 @@ def test_express(actions, credentials):
 ```
 
 ### Taking screenshots
-The screenshot will be saved into `out/test_express` directory.
+The screenshot will be saved into `out/test_login` directory.
 ```python
 actions.take_screenshot("login.png")
 ```

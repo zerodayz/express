@@ -15,7 +15,7 @@ import pytest as pytest
     ],
 )
 def test_login(actions, credentials):
-    actions.prepare_tests("test_express")
+    actions.prepare_tests("test_login")
     actions.username = credentials["username"]
     actions.password = credentials["password"]
 
