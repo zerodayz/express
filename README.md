@@ -68,8 +68,8 @@ This is covering what tests are available and compatible with https://formy-proj
 
 - [ ] Autocomplete
 - [ ] Buttons
-- [ ] Checkbox
-- [ ] Datepicker
+- [x] Checkbox
+- [x] Datepicker
 - [ ] Drag and Drop
 - [ ] Dropdown
 - [ ] Enabled and Disabled elements

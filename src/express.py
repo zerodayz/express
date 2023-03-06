@@ -85,7 +85,8 @@ class Actions:
             "tag": By.TAG_NAME,
         }
         locator_prefix = element.split('=')[0]
-        locator_name = element.split('=')[1]
+        locator_name = '='.join(element.split('=')[1:])
+
         if locator_prefix not in locator_dict.keys():
             self.logger("error", f"Element '{element}' with prefix '{locator_prefix}' is not valid locator.")
         return locator_dict[locator_prefix], locator_name
@@ -156,7 +157,12 @@ class Actions:
         os.makedirs(user_path, exist_ok=True)
         try:
             WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(locator))
-            self.driver.find_element(*locator).screenshot(os.path.join(user_path, filename))
+            # if the element is the body, take a screenshot of the whole page
+            if element == "tag=body":
+                self.driver.save_screenshot(os.path.join(user_path, filename))
+            else:
+                # otherwise, take a screenshot of the element
+                self.driver.find_element(*locator).screenshot(os.path.join(user_path, filename))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -269,6 +275,54 @@ class Actions:
             self.driver.quit()
             raise e
 
+    def clear(self, element):
+        """
+        This function clears the highlight from the given element on the web page.
+
+        Args:
+           element (tuple): The highlighted element to be cleared.
+
+        Returns:
+           None
+
+        Raises:
+           Exception: If the element is not located on the page.
+        """
+        element = self.determine_locator(element)
+        try:
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
+            self.driver.execute_script("arguments[0].style.border=''",
+                                       self.driver.find_element(*element))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def clear_nearest_xpath(self, element):
+        """
+        The clear for the nearest element that can be.
+
+        Args:
+            element (string): String representing the element to be cleared (xpath)
+
+        Returns:
+            None
+
+        Raises:
+            Exception: If element not found or if any exception occurs
+        """
+        element = self.determine_locator(element)
+        try:
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
+            # find the nearest wrapping element that can be highlighted
+            nearest_element = (element[0], element[1] + "/..")
+            self.driver.execute_script("arguments[0].style.border=''",
+                                       self.driver.find_element(*nearest_element))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
     def highlight(self, element):
         """
         This function highlights the given element on the web page.
@@ -285,8 +339,33 @@ class Actions:
         element = self.determine_locator(element)
         try:
             WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
-            self.driver.execute_script("arguments[0].style.border='5px solid red'",
+            self.driver.execute_script("arguments[0].style.border='1px solid red'",
                                        self.driver.find_element(*element))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def highlight_nearest_xpath(self, element):
+        """
+        The checkbox can't be highlighted, we need to find the nearest element that can be.
+
+        Args:
+            element (string): String representing the element to be highlighted (xpath)
+
+        Returns:
+            None
+
+        Raises:
+            Exception: If element not found or if any exception occurs
+        """
+        element = self.determine_locator(element)
+        try:
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
+            # find the nearest wrapping element that can be highlighted
+            nearest_element = (element[0], element[1] + "/..")
+            self.driver.execute_script("arguments[0].style.border='1px solid red'",
+                                       self.driver.find_element(*nearest_element))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -297,7 +376,7 @@ class Actions:
         Click on an element.
 
         Args:
-            element (tuple): Tuple representing the element to be clicked
+            element (string): String representing the element to be clicked
 
         Returns:
             None
