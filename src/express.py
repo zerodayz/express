@@ -183,6 +183,26 @@ class Actions:
             self.driver.quit()
             raise e
 
+    def switch_to_default_content(self):
+        """
+        This function switches the web driver to the default content.
+
+        Params:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            self.driver.switch_to.default_content()
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
     def wait_for_element(self, element, timeout=60):
         """
         This function waits for an element to be present on the web page.
