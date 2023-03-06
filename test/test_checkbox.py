@@ -8,4 +8,4 @@ def test_checkbox(actions):
         # Requires XPath
         actions.highlight_nearest_xpath(f"xpath=//input[@id='checkbox-{checkbox}']")
         actions.take_screenshot(f"checkbox_{checkbox}.png")
-        actions.clear_nearest_xpath(f"xpath=//input[@id='checkbox-{checkbox}']")
+        actions.remove_highlight_nearest_xpath(f"xpath=//input[@id='checkbox-{checkbox}']")

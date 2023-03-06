@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.webdriver.common.action_chains import ActionChains
 
+from src import utils
 import os
 
 """
@@ -80,7 +81,7 @@ class Actions:
             "class": By.CLASS_NAME,
             "css": By.CSS_SELECTOR,
             "xpath": By.XPATH,
-            "link": By.LINK_TEXT,
+            "linkText": By.LINK_TEXT,
             "partial_link": By.PARTIAL_LINK_TEXT,
             "tag": By.TAG_NAME,
         }
@@ -135,13 +136,15 @@ class Actions:
             self.driver.quit()
             raise e
 
-    def take_screenshot(self, filename, element="tag=body"):
+    def take_screenshot(self, filename, element="tag=body",
+                        highlight=False, highlight_element=None, annotate_text=None):
         """
         This function takes a screenshot of the web page and saves it in filename.
 
         Params:
             locator (string): Name of the element to take a screenshot of.
             filename (string): Name of the file to save the screenshot.
+            highlight (bool): If true, the element will be highlighted before taking the screenshot.
 
         Returns:
             None
@@ -155,14 +158,27 @@ class Actions:
         else:
             user_path = os.path.join(self.test_dir, self.driver.name.capitalize())
         os.makedirs(user_path, exist_ok=True)
+        filepath = os.path.join(user_path, filename)
         try:
             WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(locator))
             # if the element is the body, take a screenshot of the whole page
             if element == "tag=body":
-                self.driver.save_screenshot(os.path.join(user_path, filename))
+                if highlight and highlight_element:
+                    self.highlight(highlight_element or element)
+                    self.driver.save_screenshot(filepath)
+                    self.remove_highlight(highlight_element or element)
+                else:
+                    self.driver.save_screenshot(filepath)
             else:
-                # otherwise, take a screenshot of the element
-                self.driver.find_element(*locator).screenshot(os.path.join(user_path, filename))
+                if highlight:
+                    self.highlight(highlight_element or element)
+                    self.driver.find_element(*locator).screenshot(filepath)
+                    self.remove_highlight(highlight_element or element)
+                else:
+                    self.driver.find_element(*locator).screenshot(filepath)
+            # annotate the screenshot
+            if annotate_text:
+                utils.annotate(filepath, annotate_text)
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -231,6 +247,26 @@ class Actions:
             self.driver.quit()
             raise e
 
+    def check_page_url(self, url):
+        """
+        This function checks if the current page URL is the same as the given URL.
+
+        Params:
+            url (str): The URL to check.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            WebDriverWait(self.driver, 60).until(EC.url_to_be(url))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
     def move_mouse_to(self, x, y):
         """
         This function moves the mouse to the given coordinates.
@@ -247,6 +283,32 @@ class Actions:
         """
         try:
             ActionChains(self.driver).move_by_offset(x, y).perform()
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def drag_and_drop(self, element_from, element_to):
+        """
+        This function drags an element to another element.
+
+        Args:
+            element_from (str): The element to drag.
+            element_to (str): The element to drop the first element on.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element_from = self.determine_locator(element_from)
+        element_to = self.determine_locator(element_to)
+        try:
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element_from))
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element_to))
+            ActionChains(self.driver).drag_and_drop(self.driver.find_element(*element_from),
+                                                    self.driver.find_element(*element_to)).perform()
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -275,7 +337,7 @@ class Actions:
             self.driver.quit()
             raise e
 
-    def clear(self, element):
+    def remove_highlight(self, element):
         """
         This function clears the highlight from the given element on the web page.
 
@@ -298,7 +360,7 @@ class Actions:
             self.driver.quit()
             raise e
 
-    def clear_nearest_xpath(self, element):
+    def remove_highlight_nearest_xpath(self, element):
         """
         The clear for the nearest element that can be.
 
@@ -339,8 +401,12 @@ class Actions:
         element = self.determine_locator(element)
         try:
             WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
-            self.driver.execute_script("arguments[0].style.border='1px solid red'",
-                                       self.driver.find_element(*element))
+            while self.driver.find_element(*element).value_of_css_property("border") != "2px solid rgb(255, 0, 0)":
+                self.logger("debug", "Highlighting element: " + str(element) + " ... current border: " + str(
+                    self.driver.find_element(*element).value_of_css_property("border")))
+
+                self.driver.execute_script("arguments[0].style.border='2px solid red'",
+                                           self.driver.find_element(*element))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -364,7 +430,7 @@ class Actions:
             WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
             # find the nearest wrapping element that can be highlighted
             nearest_element = (element[0], element[1] + "/..")
-            self.driver.execute_script("arguments[0].style.border='1px solid red'",
+            self.driver.execute_script("arguments[0].style.border='2px solid red'",
                                        self.driver.find_element(*nearest_element))
         except Exception as e:
             print("Error: ", e)

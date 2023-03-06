@@ -70,7 +70,7 @@ This is covering what tests are available and compatible with https://formy-proj
 - [ ] Buttons
 - [x] Checkbox
 - [x] Datepicker
-- [ ] Drag and Drop
+- [x] Drag and Drop
 - [ ] Dropdown
 - [ ] Enabled and Disabled elements
 - [ ] File Upload
