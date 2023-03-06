@@ -162,6 +162,49 @@ class Actions:
             self.driver.quit()
             raise e
 
+    def switch_to_iframe(self, element):
+        """
+        This function switches the web driver to the given iframe.
+
+        Params:
+            element (str): The iframe to switch to.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element = self.determine_locator(element)
+        try:
+            WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(element))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def wait_for_element(self, element, timeout=60):
+        """
+        This function waits for an element to be present on the web page.
+
+        Params:
+            element (str): An element locator.
+            timeout (int): The number of seconds to wait before timing out.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element = self.determine_locator(element)
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(element))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
     def move_mouse_to(self, x, y):
         """
         This function moves the mouse to the given coordinates.

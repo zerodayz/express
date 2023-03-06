@@ -4,6 +4,7 @@ import time
 def test_recaptcha_v2(actions):
     actions.prepare_tests("test_recaptcha_v2")
     actions.go("https://patrickhlauke.github.io/recaptcha/")
-    actions.driver.switch_to.frame(0)
+    actions.switch_to_iframe("css=.g-recaptcha iframe")
     actions.click("css=.recaptcha-checkbox-border")
+    actions.wait_for_element("class=recaptcha-checkbox-checked")
     actions.take_screenshot("recaptcha_v2.png")
