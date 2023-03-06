@@ -60,7 +60,7 @@ class Actions:
       Testing functions
     """
 
-    def determine_locator(self, locator):
+    def determine_locator(self, element):
         """
         This function determines the locator used to find an element on a web page.
 
@@ -84,10 +84,10 @@ class Actions:
             "partial_link": By.PARTIAL_LINK_TEXT,
             "tag": By.TAG_NAME,
         }
-        locator_prefix = locator.split('=')[0]
-        locator_name = locator.split('=')[1]
+        locator_prefix = element.split('=')[0]
+        locator_name = element.split('=')[1]
         if locator_prefix not in locator_dict.keys():
-            self.logger("error", f"Locator '{locator}' prefix '{locator_prefix}' is not valid.")
+            self.logger("error", f"Element '{element}' with prefix '{locator_prefix}' is not valid locator.")
         return locator_dict[locator_prefix], locator_name
 
     def go(self, url):
@@ -106,7 +106,7 @@ class Actions:
         self.driver.get(url)
         # wait for the page to load
         try:
-            WebDriverWait(self.driver, 60).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.TAG_NAME, 'body')))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -125,15 +125,16 @@ class Actions:
         Raises:
             Exception: In case of any error.
         """
+        element = self.determine_locator(element)
         try:
-            WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(element))
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
             raise e
 
-    def take_screenshot(self, filename, locator="tag=body"):
+    def take_screenshot(self, filename, element="tag=body"):
         """
         This function takes a screenshot of the web page and saves it in filename.
 
@@ -147,13 +148,36 @@ class Actions:
         Raises:
             Exception: In case of any error.
         """
-        locator = self.determine_locator(locator)
-        user_path = os.path.join(self.test_dir, self.driver.name.capitalize(), self.username)
+        locator = self.determine_locator(element)
+        if self.username:
+            user_path = os.path.join(self.test_dir, self.driver.name.capitalize(), self.username)
+        else:
+            user_path = os.path.join(self.test_dir, self.driver.name.capitalize())
         os.makedirs(user_path, exist_ok=True)
-
         try:
-            WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(locator))
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(locator))
             self.driver.find_element(*locator).screenshot(os.path.join(user_path, filename))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def move_mouse_to(self, x, y):
+        """
+        This function moves the mouse to the given coordinates.
+
+        Args:
+            x (int): The x coordinate to move the mouse to.
+            y (int): The y coordinate to move the mouse to.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            ActionChains(self.driver).move_by_offset(x, y).perform()
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -164,7 +188,7 @@ class Actions:
         This function will type text into an element on a web page.
 
         Args:
-            element (tuple): A tuple containing an element locator.
+            element (str): An element locator.
             text (str): The text to type into the element.
 
         Returns:
@@ -173,8 +197,9 @@ class Actions:
         Raises:
             Exception: In case of any error.
         """
+        element = self.determine_locator(element)
         try:
-            WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(element))
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
             self.driver.find_element(*element).send_keys(text)
         except Exception as e:
             print("Error: ", e)
@@ -194,8 +219,9 @@ class Actions:
         Raises:
            Exception: If the element is not located on the page.
         """
+        element = self.determine_locator(element)
         try:
-            WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(element))
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
             self.driver.execute_script("arguments[0].style.border='5px solid red'",
                                        self.driver.find_element(*element))
         except Exception as e:
@@ -216,8 +242,9 @@ class Actions:
         Raises:
             Exception: If element not found or if any exception occurs
         """
+        element = self.determine_locator(element)
         try:
-            WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(element))
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
             self.driver.find_element(*element).click()
         except Exception as e:
             print("Error: ", e)
@@ -237,8 +264,9 @@ class Actions:
         Raises:
             Exception: If any error occurs.
         """
+        element = self.determine_locator(element)
         try:
-            WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(element))
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element))
             # The move_to_element action does not work in Firefox unless the element is scrolled into view.
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
             hover = ActionChains(self.driver).move_to_element(self.driver.find_element(*element))
@@ -290,20 +318,16 @@ class Actions:
             Exception: If there is an error while logging in
         """
         self.go(url)
-        username_field = self.determine_locator(username_locator)
-        password_field = self.determine_locator(password_locator)
-        login_button = self.determine_locator(submit)
-
         if self.username is not None:
             username = self.username
         if self.password is not None:
             password = self.password
-        self.type(username_field, username)
-        self.type(password_field, password)
-        self.click(login_button)
+        self.type(username_locator, username)
+        self.type(password_locator, password)
+        self.click(submit)
         # wait for the page to load
         try:
-            WebDriverWait(self.driver, 60).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
+            WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.TAG_NAME, 'body')))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()

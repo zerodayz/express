@@ -27,7 +27,7 @@ class Express:
             'chrome': webdriver.ChromeOptions(),
             'firefox': webdriver.FirefoxOptions()
         }
-        options[browser_to_run].add_argument('--headless')
+        # options[browser_to_run].add_argument('--headless')
         if browser_to_run not in services:
             raise Exception(f'Browser {browser_to_run} is not supported.')
 
