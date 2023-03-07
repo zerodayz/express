@@ -2,8 +2,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 
 
 def element_attribute_is(locator, attribute_, expected_value):
-    """An expectation for checking if the given attribute is included in the
-    specified element.
+    """An expectation for checking if the given attribute is set to expected value.
 
     locator, attribute
     """

@@ -54,6 +54,24 @@ def determine_locator(element):
     return locator_dict[locator_prefix], locator_name
 
 
+def validate_style(style):
+    """
+    This function validates the given style.
+
+    Args:
+       style (str): The style to validate.
+
+    Returns:
+       str: The validated style.
+
+    Raises:
+       Exception: If the style is not valid.
+    """
+    if not style.endswith(";"):
+        style = style + ";"
+    return style
+
+
 class Actions:
 
     def __init__(self, driver, caplog):
@@ -305,7 +323,7 @@ class Actions:
             self.driver.quit()
             raise e
 
-    def check_page_url(self, url):
+    def is_url(self, url):
         """
         This function checks if the current page URL is the same as the given URL.
 
@@ -442,9 +460,7 @@ class Actions:
         """
         locator = determine_locator(element)
         # validate css style
-        if not style.endswith(";"):
-            style = style + ";"
-
+        style = validate_style(style)
         try:
             self.wait_for_element(locator)
             # remove any color transition from the element https://github.com/SeleniumHQ/selenium/issues/11740
