@@ -441,6 +441,10 @@ class Actions:
            Exception: If the element is not located on the page.
         """
         locator = determine_locator(element)
+        # validate css style
+        if not style.endswith(";"):
+            style = style + ";"
+
         try:
             self.wait_for_element(locator)
             # remove any color transition from the element https://github.com/SeleniumHQ/selenium/issues/11740
