@@ -12,4 +12,5 @@ def test_dropdown(actions):
     actions.click("linkText=File Upload")
 
     actions.wait_for_page_to_load("https://formy-project.herokuapp.com/fileupload")
-    actions.take_screenshot("dropdown_3.png")
+
+    actions.take_screenshot("dropdown_3.png", annotate_text="The File Upload page should be now open.")
