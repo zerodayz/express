@@ -173,20 +173,14 @@ class Actions:
                     original_style = self.get_style(highlight_element)
 
                     self.highlight(highlight_element, style=highlight_style)
-                    WebDriverWait(self.driver, 60).until(EC2.element_attribute_is(highlight_element,
-                                                                                  "style", highlight_style))
-                    # Get the current style of the element
-                    highlighted_style = self.get_style(highlight_element)
-
-                    logging.getLogger().info(f"Taking screenshot of {highlight_element}, which style is {highlighted_style}")
-
                     self.driver.save_screenshot(filepath)
-                    # self.remove_highlight(highlight_element, style=original_style)
+                    self.remove_highlight(highlight_element, style=original_style)
                 else:
                     self.driver.save_screenshot(filepath)
             else:
                 if highlight and highlight_element:
                     highlight_element = determine_locator(highlight_element)
+                    # save the original style of the element
                     original_style = self.get_style(highlight_element)
 
                     self.highlight(highlight_element, style=highlight_style)
@@ -424,9 +418,8 @@ class Actions:
             style = style
         try:
             self.wait_for_element(locator)
-            while style != self.driver.find_element(*locator).get_attribute("style"):
-                self.driver.execute_script("arguments[0].style = arguments[1];",
-                                           self.driver.find_element(*locator), style)
+            self.driver.execute_script("arguments[0].style = arguments[1];",
+                                       self.driver.find_element(*locator), style)
 
         except Exception as e:
             print("Error: ", e)
@@ -449,10 +442,12 @@ class Actions:
         """
         locator = determine_locator(element)
         try:
-
             self.wait_for_element(locator)
+            # remove any color transition from the element https://github.com/SeleniumHQ/selenium/issues/11740
+            # and update the element style to the given style
             self.driver.execute_script("arguments[0].style = arguments[1];",
-                                       self.driver.find_element(*locator), style)
+                                       self.driver.find_element(*locator),
+                                       style + "transition: none !important;")
 
         except Exception as e:
             print("Error: ", e)
