@@ -6,17 +6,18 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
+import logging
 from src import express
 
 
 class Express:
-    def __init__(self, driver_name):
+    def __init__(self, driver_name, caplog):
         self.driver = None
         self.actions = None
 
-        self._init_driver(driver_name)
+        self._init_driver(driver_name, caplog)
 
-    def _init_driver(self, browser_to_run):
+    def _init_driver(self, browser_to_run, caplog):
         """Create a driver instance based on the browser to run."""
 
         services = {
@@ -27,13 +28,13 @@ class Express:
             'chrome': webdriver.ChromeOptions(),
             'firefox': webdriver.FirefoxOptions()
         }
-        # options[browser_to_run].add_argument('--headless')
+        options[browser_to_run].add_argument('--headless=new')
         if browser_to_run not in services:
             raise Exception(f'Browser {browser_to_run} is not supported.')
 
         self.driver = webdriver.__dict__[browser_to_run.capitalize()](service=services[browser_to_run],
                                                                       options=options[browser_to_run])
-        self.actions = express.Actions(self.driver)
+        self.actions = express.Actions(self.driver, caplog)
 
 
 def pytest_addoption(parser):
@@ -51,8 +52,8 @@ def pytest_generate_tests(metafunc):
 
 
 @pytest.fixture(autouse=True)
-def actions(browser_to_run):
+def actions(browser_to_run, caplog):
     """Create an instance of Express class and return it to the test."""
-    x = Express(browser_to_run)
+    x = Express(browser_to_run, caplog)
     yield x.actions
     x.driver.quit()
