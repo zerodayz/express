@@ -323,7 +323,7 @@ class Actions:
             self.driver.quit()
             raise e
 
-    def is_url(self, url):
+    def wait_for_page_to_load(self, url):
         """
         This function checks if the current page URL is the same as the given URL.
 
@@ -337,7 +337,11 @@ class Actions:
             Exception: In case of any error.
         """
         try:
+            old_page = self.driver.find_element(by=By.TAG_NAME, value='body')
             WebDriverWait(self.driver, 60).until(EC.url_to_be(url))
+            # check if the new webpage was loaded
+            WebDriverWait(self.driver, 60).until(EC.staleness_of(old_page))
+
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
