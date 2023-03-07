@@ -3,3 +3,5 @@ pytest
 pytest-xdist
 webdriver-manager
 pillow
+numpy
+scipy

@@ -1,4 +1,7 @@
 import os
+import random
+import time
+
 from PIL import Image, ImageFont, ImageDraw
 
 

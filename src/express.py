@@ -1,5 +1,6 @@
 import json
 import logging
+import random
 import shutil
 import time
 
@@ -10,7 +11,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
 from src import utils
-from src import expected_conditions as EC2
 import os
 """
   Constants for the Actions class
@@ -256,6 +256,27 @@ class Actions:
             self.driver.quit()
             raise e
 
+    def wait_between(self, w_min, w_max):
+        """
+        This function waits for a random amount of time between min and max.
+
+        Params:
+            w_min (int): The minimum amount of time to wait.
+            w_max (int): The maximum amount of time to wait.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            time.sleep(random.randint(w_min, w_max))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
     def wait_for_style(self, element, style, timeout=60):
         """
         This function waits for an element to have a specific style.
@@ -342,6 +363,27 @@ class Actions:
             # check if the new webpage was loaded
             WebDriverWait(self.driver, 60).until(EC.staleness_of(old_page))
 
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def move_mouse_to_element(self, element):
+        """
+        This function moves the mouse to the given element.
+
+        Params:
+            element (str): An element locator.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element = determine_locator(element)
+        try:
+            ActionChains(self.driver).move_to_element(self.driver.find_element(*element)).perform()
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
