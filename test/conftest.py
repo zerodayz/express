@@ -55,7 +55,7 @@ def pytest_generate_tests(metafunc):
 
 
 @pytest.fixture(autouse=True)
-def actions(request, browser_to_run, caplog):
+def actions(browser_to_run, caplog):
     """Create an instance of Express class and return it to the test."""
     x = Express(browser_to_run, caplog)
 
