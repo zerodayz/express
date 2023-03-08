@@ -5,3 +5,6 @@ webdriver-manager
 pillow
 numpy
 scipy
+sphinx
+sphinx-markdown-builder
+sphinx-autodoc-typehints
