@@ -74,6 +74,13 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+echo -e "${PINK}  _____  __  __  ____${NC}"
+echo -e "${PINK} | ____| \ \/ / |  _ \\ ${NC}"
+echo -e "${PINK} |  _|    \  /  | |_) |${NC}"
+echo -e "${PINK} | |___   /  \  |  __/${NC}"
+echo -e "${PINK} |_____| /_/\_\ |_|${NC}   The Express Framework for Selenium"
+echo -e ""
+
 # Activate virtual environment
 echo -e "${YELLOW}Activating virtual environment...${NC}"
 if ! source .venv/bin/activate
