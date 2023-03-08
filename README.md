@@ -46,17 +46,32 @@ cp exported/test_login.py express/test/
 
 ## Run the tests
 
-Runs 4 tests in parallel with Chrome and Firefox browsers.
+```bash
+  _____  __  __  ____
+ | ____| \ \/ / |  _ \ 
+ |  _|    \  /  | |_) |
+ | |___   /  \  |  __/
+ |_____| /_/\_\ |_|   The Express Framework for Selenium
 
-```python
-python -m pytest -s -n 4 --browser=chrome --browser=firefox test/test_login.py
-```
+USAGE:
+          run.sh -n|--number <tests_in_parallel> --headless --browser <browser1> --browser <browser2> <test_file.py>
+EXAMPLES:
 
+   If you are not in a rush, you can run the tests sequentially on a single browser.
 
-For example if you have 8 cores and 4 tests, you can run all tests for all browsers in parallel.
+          run.sh --browser chrome test/test_example.py
 
-```python
-python -m pytest -s -n 8 --browser=chrome --browser=firefox test/test_login.py
+   If you want to run the tests in parallel on a single browser, you can use the -n option.
+
+          run.sh -n 2 --browser chrome test/test_example.py
+
+   If you want to run the tests in parallel on multiple browsers, you can use the --browser option multiple times.
+
+          run.sh -n 2 --browser chrome --browser firefox test/test_example.py
+
+   If you want to run the tests in parallel on multiple browsers in headless mode, you can use the --headless option.
+
+          run.sh -n 2 --browser chrome --browser firefox --headless test/test_example.py
 ```
 
 This can shorten the time of testings up to 3 times.
@@ -71,7 +86,7 @@ This is covering what tests are available and compatible with https://formy-proj
 - [x] Checkbox
 - [x] Datepicker
 - [x] Drag and Drop
-- [ ] Dropdown
+- [x] Dropdown
 - [ ] Enabled and Disabled elements
 - [ ] File Upload
 - [ ] Key and Mouse press
