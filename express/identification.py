@@ -1,6 +1,7 @@
 from express import utils
 from selenium.webdriver.common.by import By
 
+
 class Base:
     def find_nearest_xpath(self, element):
         """
