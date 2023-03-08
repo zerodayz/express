@@ -47,6 +47,10 @@ echo -e "${YELLOW}Creating files...${NC}"
 
 cat > express/_custom.py << EOF
 class Base:
+
+    def __init__(self):
+        pass
+
     def my_example_function(self, arg1):
         """
         This is my first example function. This function can be called from any test using the following syntax:
