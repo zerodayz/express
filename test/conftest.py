@@ -10,7 +10,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
 import logging
-from express import express
+from express import Actions
 
 
 class Express:
@@ -37,7 +37,7 @@ class Express:
 
         self.driver = webdriver.__dict__[browser_to_run.capitalize()](service=services[browser_to_run],
                                                                       options=options[browser_to_run])
-        self.actions = express.Actions(self.driver, caplog)
+        self.actions = Actions(self.driver, caplog)
 
 
 def pytest_addoption(parser):
