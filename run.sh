@@ -61,15 +61,26 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+# Set default variables
 if [ -z "$HEADLESS" ]; then
     HEADLESS=false
 fi
+if [ -z "$BROWSER" ]; then
+    BROWSER=("chrome")
+fi
 
+# Print variables
 echo -e "${YELLOW}Running tests...${NC}"
 echo -e "${GREEN}Number of tests in parallel: $NUMBER${NC}"
 echo -e "${GREEN}Headless: $HEADLESS${NC}"
 echo -e "${GREEN}Browsers: ${BROWSER[@]}${NC}"
 echo -e "${GREEN}Test file: $TEST${NC}"
+
+# Check if test file exists
+if [ ! -f "$TEST" ]; then
+    echo -e "${RED}Test file does not exist.${NC}"
+    exit 1
+fi
 
 # Construct pytest command
 PYTEST_CMD="python3 -m pytest"
