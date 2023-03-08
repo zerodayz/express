@@ -2,7 +2,7 @@ from express import utils
 from selenium.webdriver.common.by import By
 
 
-class Base:
+class Identification:
     def find_nearest_xpath(self, element):
         """
         The checkbox can't be highlighted, we need to find the nearest element that can be.

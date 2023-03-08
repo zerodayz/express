@@ -50,7 +50,7 @@ if [ -f express/_custom.py ]; then
 else
     echo -e "${YELLOW}Creating custom file...${NC}"
 cat > express/_custom.py << EOF
-class Base:
+class MyCustomActions:
     """
     This is your own class. You can add any functions you want to this class, and they will be available to all tests.
     """

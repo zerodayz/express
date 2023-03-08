@@ -9,7 +9,7 @@ from express import expected_conditions as EC2
 from express import utils
 
 
-class Base:
+class Waiting:
     def wait_for_element_selected(self, element, timeout=10):
         """
         This function waits for the element to be selected.

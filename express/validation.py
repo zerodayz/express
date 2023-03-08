@@ -1,7 +1,7 @@
 from express import utils
 
 
-class Base:
+class Validation:
     @staticmethod
     def validate_style(style):
         """

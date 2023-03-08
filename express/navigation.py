@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from express import utils
 
 
-class Base:
+class Navigation:
     def go(self, url):
         """
         Navigates the web driver to the given URL, and waits for the page to load.

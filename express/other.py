@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from express import utils
 
 
-class Base:
+class Other:
     def __init__(self):
         self.test_dir = None
         self.password = None

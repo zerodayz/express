@@ -5,7 +5,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from express import utils
 
 
-class Base:
+class Manipulation:
     def click(self, element):
         """
         Click on an element.
