@@ -5,3 +5,4 @@ out
 .DS_Store
 geckodriver.log
 __pycache__/
+*/__pycache__/

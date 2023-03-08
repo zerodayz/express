@@ -91,7 +91,10 @@ contain the root `toctree` directive. -->
             * [`Actions.wait_between()`](express.md#express.express.Actions.wait_between)
 
 
-            * [`Actions.wait_for_element()`](express.md#express.express.Actions.wait_for_element)
+            * [`Actions.wait_for_element_clickable()`](express.md#express.express.Actions.wait_for_element_clickable)
+
+
+            * [`Actions.wait_for_element_presence()`](express.md#express.express.Actions.wait_for_element_presence)
 
 
             * [`Actions.wait_for_page_to_load()`](express.md#express.express.Actions.wait_for_page_to_load)

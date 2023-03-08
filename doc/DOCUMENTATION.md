@@ -339,7 +339,24 @@ Raises:
     Exception: In case of any error.
 
 
-#### wait_for_element(element, timeout=60)
+#### wait_for_element_clickable(element, timeout=60)
+This function waits for an element to be clickable on the web page.
+
+Params:
+
+    element (str): An element locator.
+    timeout (int): The number of seconds to wait before timing out.
+
+Returns:
+
+    None
+
+Raises:
+
+    Exception: In case of any error.
+
+
+#### wait_for_element_presence(element, timeout=60)
 This function waits for an element to be present on the web page.
 
 Params:

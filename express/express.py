@@ -128,7 +128,7 @@ class Actions:
         self.driver.get(url)
         # wait for the page to load
         try:
-            self.wait_for_element((By.TAG_NAME, 'body'))
+            self.wait_for_element_presence((By.TAG_NAME, 'body'))
             
         except Exception as e:
             print("Error: ", e)
@@ -150,7 +150,7 @@ class Actions:
         """
         element = determine_locator(element)
         try:
-            self.wait_for_element(element)
+            self.wait_for_element_presence(element)
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
         except Exception as e:
             print("Error: ", e)
@@ -315,14 +315,14 @@ class Actions:
         """
         locator = determine_locator(element)
         try:
-            self.wait_for_element(locator)
+            self.wait_for_element_presence(locator)
             return self.driver.find_element(*locator).get_attribute("style")
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
             raise e
 
-    def wait_for_element(self, element, timeout=60):
+    def wait_for_element_presence(self, element, timeout=60):
         """
         This function waits for an element to be present on the web page.
 
@@ -339,6 +339,28 @@ class Actions:
         element = determine_locator(element)
         try:
             WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(element))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def wait_for_element_clickable(self, element, timeout=60):
+        """
+        This function waits for an element to be clickable on the web page.
+
+        Params:
+            element (str): An element locator.
+            timeout (int): The number of seconds to wait before timing out.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element = determine_locator(element)
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(element))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -452,7 +474,7 @@ class Actions:
         """
         element = determine_locator(element)
         try:
-            self.wait_for_element(element)
+            self.wait_for_element_presence(element)
             self.driver.find_element(*element).send_keys(text)
         except Exception as e:
             print("Error: ", e)
@@ -481,7 +503,7 @@ class Actions:
         else:
             style = style
         try:
-            self.wait_for_element(locator)
+            self.wait_for_element_presence(locator)
             self.driver.execute_script("arguments[0].style = arguments[1];",
                                        self.driver.find_element(*locator), style)
 
@@ -508,7 +530,7 @@ class Actions:
         # validate css style
         style = validate_style(style)
         try:
-            self.wait_for_element(locator)
+            self.wait_for_element_presence(locator)
             # remove any color transition from the element https://github.com/SeleniumHQ/selenium/issues/11740
             # and update the element style to the given style
             self.driver.execute_script("arguments[0].style = arguments[1];",
@@ -542,7 +564,7 @@ class Actions:
             raise Exception(f"element '{element}' is not of type XPath. Please use XPath element.")
         try:
 
-            self.wait_for_element(element)
+            self.wait_for_element_presence(element)
             # find the nearest wrapping element that can be highlighted
             return element[0], element[1] + "/.."
         except Exception as e:
@@ -566,7 +588,7 @@ class Actions:
         element = determine_locator(element)
         try:
 
-            self.wait_for_element(element)
+            self.wait_for_element_clickable(element)
 
             self.driver.find_element(*element).click()
         except Exception as e:
@@ -589,7 +611,7 @@ class Actions:
         """
         element = determine_locator(element)
         try:
-            self.wait_for_element(element)
+            self.wait_for_element_presence(element)
             # The move_to_element action does not work in Firefox unless the element is scrolled into view.
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
             hover = ActionChains(self.driver).move_to_element(self.driver.find_element(*element))
@@ -650,7 +672,7 @@ class Actions:
         self.click(submit)
         # wait for the page to load
         try:
-            self.wait_for_element((By.TAG_NAME, 'body'))
+            self.wait_for_element_presence((By.TAG_NAME, 'body'))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
