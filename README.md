@@ -46,32 +46,28 @@ cp exported/test_login.py express/test/
 
 ## Run the tests
 
+### Syntax
+
 ```bash
-  _____  __  __  ____
- | ____| \ \/ / |  _ \ 
- |  _|    \  /  | |_) |
- | |___   /  \  |  __/
- |_____| /_/\_\ |_|   The Express Framework for Selenium
+run.sh -n|--number <tests_in_parallel> --headless --browser <browser1> --browser <browser2> <test_file.py>
+```
+### Examples
+1. If you are not in a rush, you can run the tests sequentially on a single browser.
+```bash
+run.sh --browser chrome test/test_example.py
+```
+2. If you want to run the tests in parallel on a single browser, you can use the -n option.
 
-USAGE:
-          run.sh -n|--number <tests_in_parallel> --headless --browser <browser1> --browser <browser2> <test_file.py>
-EXAMPLES:
-
-   If you are not in a rush, you can run the tests sequentially on a single browser.
-
-          run.sh --browser chrome test/test_example.py
-
-   If you want to run the tests in parallel on a single browser, you can use the -n option.
-
-          run.sh -n 2 --browser chrome test/test_example.py
-
-   If you want to run the tests in parallel on multiple browsers, you can use the --browser option multiple times.
-
-          run.sh -n 2 --browser chrome --browser firefox test/test_example.py
-
-   If you want to run the tests in parallel on multiple browsers in headless mode, you can use the --headless option.
-
-          run.sh -n 2 --browser chrome --browser firefox --headless test/test_example.py
+```bash
+run.sh -n 2 --browser chrome test/test_example.py
+```
+3. If you want to run the tests in parallel on multiple browsers, you can use the --browser option multiple times.
+```bash
+run.sh -n 2 --browser chrome --browser firefox test/test_example.py
+```
+4. If you want to run the tests in parallel on multiple browsers in headless mode, you can use the --headless option.
+```bash
+run.sh -n 2 --browser chrome --browser firefox --headless test/test_example.py
 ```
 
 This can shorten the time of testings up to 3 times.
