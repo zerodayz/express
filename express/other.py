@@ -58,7 +58,7 @@ class Base:
             # if the element is the body, take a screenshot of the whole page
             if element == "tag=body":
                 if highlight and highlight_element:
-                    highlight_element = utils.determine_locator(highlight_element)
+                    highlight_element = self.determine_locator(highlight_element)
                     # save the original style of the element
                     original_style = self.get_style(highlight_element)
 
@@ -69,7 +69,7 @@ class Base:
                     self.driver.save_screenshot(filepath)
             else:
                 if highlight and highlight_element:
-                    highlight_element = utils.determine_locator(highlight_element)
+                    highlight_element = self.determine_locator(highlight_element)
                     # save the original style of the element
                     original_style = self.get_style(highlight_element)
 

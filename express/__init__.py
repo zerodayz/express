@@ -14,6 +14,9 @@ class Actions(navigation.Base, waiting.Base, identification.Base, manipulation.B
         self.driver = driver
         self.caplog = caplog
 
+        self.username = None
+        self.password = None
+        self.test_dir = None
         self.dir = BASE_DIR
         self.dir_in = os.path.join(BASE_DIR, 'in')
         self.dir_out = os.path.join(BASE_DIR, 'out')

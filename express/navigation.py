@@ -42,7 +42,7 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             self.wait_for_element_presence(element)
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
@@ -104,7 +104,7 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(element))
         except Exception as e:

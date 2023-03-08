@@ -19,7 +19,7 @@ class Base:
         Raises:
             Exception: If element not found or if any exception occurs
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             self.wait_for_element_clickable(element)
             self.driver.find_element(*element).click()
@@ -41,7 +41,7 @@ class Base:
         Raises:
             Exception: If any error occurs.
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             self.wait_for_element_presence(element)
             # The move_to_element action does not work in Firefox unless the element is scrolled into view.
@@ -66,7 +66,7 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             ActionChains(self.driver).move_to_element(self.driver.find_element(*element)).perform()
         except Exception as e:
@@ -109,8 +109,8 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        element_from = utils.determine_locator(element_from)
-        element_to = utils.determine_locator(element_to)
+        element_from = self.determine_locator(element_from)
+        element_to = self.determine_locator(element_to)
         try:
             WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element_from))
             WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element_to))
@@ -135,7 +135,7 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             self.wait_for_element_presence(element)
             self.driver.find_element(*element).send_keys(text)
@@ -158,7 +158,7 @@ class Base:
         Raises:
            Exception: If the element is not located on the page.
         """
-        locator = utils.determine_locator(element)
+        locator = self.determine_locator(element)
         # If no style was specified, just reset the style to an empty string.
         # otherwise, use the style that was specified.
         if style is None:
@@ -189,7 +189,7 @@ class Base:
         Raises:
            Exception: If the element is not located on the page.
         """
-        locator = utils.determine_locator(element)
+        locator = self.determine_locator(element)
         # validate css style
         style = self.validate_style(style)
         try:

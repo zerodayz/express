@@ -33,7 +33,7 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        locator = utils.determine_locator(element)
+        locator = self.determine_locator(element)
         try:
             self.wait_for_element_presence(locator)
             return self.driver.find_element(*locator).get_attribute("style")

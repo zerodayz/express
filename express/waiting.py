@@ -24,7 +24,7 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             WebDriverWait(self.driver, timeout).until(EC.element_to_be_selected(element))
         except Exception as e:
@@ -69,7 +69,7 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             WebDriverWait(self.driver, timeout).until(EC2.element_attribute_is(element, attribute, value))
         except Exception as e:
@@ -91,7 +91,7 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(element))
         except Exception as e:
@@ -113,7 +113,7 @@ class Base:
         Raises:
             Exception: In case of any error.
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         try:
             WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(element))
         except Exception as e:

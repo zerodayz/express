@@ -16,7 +16,7 @@ class Base:
         Raises:
             Exception: If element not found or if any exception occurs
         """
-        element = utils.determine_locator(element)
+        element = self.determine_locator(element)
         # Check the element is type XPath
         if element[0] != "xpath":
             self.driver.quit()
