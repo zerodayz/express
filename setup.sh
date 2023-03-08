@@ -43,6 +43,25 @@ then
 fi
 echo -e "${GREEN}Requirements installed.${NC}"
 
+echo -e "${YELLOW}Creating files...${NC}"
+
+cat > express/_custom.py << EOF
+class Base:
+    def my_example_function(self, arg1):
+        """
+        This is my first example function. This function can be called from any test using the following syntax:
+
+            actions.my_example_function("test")
+
+        Args:
+            arg1 (string): This is the first argument.
+
+        Returns:
+            None.
+        """
+        pass
+EOF
+
 echo -e "${GREEN}Done!${NC}"
 echo ""
 echo "Run 'source .venv/bin/activate' to activate the virtual environment."
