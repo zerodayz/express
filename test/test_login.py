@@ -15,7 +15,6 @@ import pytest as pytest
     ],
 )
 def test_login(actions, credentials):
-    actions.prepare_tests("test_login")
     actions.set_credentials(credentials["username"], credentials["password"])
 
     actions.login(url="http://127.0.0.1:8000/login", submit="css=.w3-button")

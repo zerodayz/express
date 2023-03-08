@@ -1,10 +1,4 @@
-import time
-
-from express import utils
-
-
 def test_recaptcha_v2(actions):
-    actions.prepare_tests("test_recaptcha_v2")
     actions.go("https://patrickhlauke.github.io/recaptcha/")
     actions.switch_to_iframe("css=.g-recaptcha iframe")
     actions.click("css=.recaptcha-checkbox-border")

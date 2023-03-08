@@ -1,3 +1,6 @@
+import os
+import re
+
 import pytest as pytest
 
 from selenium import webdriver
@@ -52,8 +55,16 @@ def pytest_generate_tests(metafunc):
 
 
 @pytest.fixture(autouse=True)
-def actions(browser_to_run, caplog):
+def actions(request, browser_to_run, caplog):
     """Create an instance of Express class and return it to the test."""
     x = Express(browser_to_run, caplog)
+
+    # prepare the test
+    full_name = os.environ.get('PYTEST_CURRENT_TEST').split(' ')[0]
+    result = re.findall(r"test_\w+", full_name)[0]
+    logging.getLogger().info(f'Running test: {result} on {browser_to_run} browser.')
+    x.actions.prepare_tests(result)
+
+    # execute the test
     yield x.actions
     x.driver.quit()

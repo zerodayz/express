@@ -1,8 +1,4 @@
-import logging
-
-
 def test_checkbox(actions):
-    actions.prepare_tests("test_checkbox")
     actions.go("https://formy-project.herokuapp.com/checkbox")
 
     for checkbox in range(1, 4):

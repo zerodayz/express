@@ -1,5 +1,4 @@
 def test_dropdown(actions):
-    actions.prepare_tests("test_dropdown")
     actions.go("https://formy-project.herokuapp.com/dropdown")
 
     actions.take_screenshot("dropdown_1.png", highlight=True, highlight_element="id=dropdownMenuButton",

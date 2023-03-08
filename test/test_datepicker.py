@@ -1,5 +1,4 @@
 def test_datepicker(actions):
-    actions.prepare_tests("test_datepicker")
     actions.go("https://formy-project.herokuapp.com/datepicker")
     actions.take_screenshot("datepicker_1.png")
 
