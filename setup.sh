@@ -45,6 +45,10 @@ echo -e "${GREEN}Requirements installed.${NC}"
 
 echo -e "${YELLOW}Creating files...${NC}"
 
+if [ -f express/_custom.py ]; then
+    echo -e "${YELLOW}Custom file already exists. Skipping...${NC}"
+else
+    echo -e "${YELLOW}Creating custom file...${NC}"
 cat > express/_custom.py << EOF
 class Base:
     """
@@ -67,6 +71,7 @@ class Base:
         """
         pass
 EOF
+fi
 
 echo -e "${GREEN}Done!${NC}"
 echo ""
