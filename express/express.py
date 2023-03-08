@@ -23,14 +23,14 @@ def determine_locator(element):
     This function determines the locator used to find an element on a web page.
 
     Params:
-    locator (str): The locator used to locate an element on a web page.
+        locator (str): The locator used to locate an element on a web page.
 
     Returns:
-    By (object): An object of the selenium.webdriver.common.by class.
-    Name (str): The name of the locator.
+        By (object): An object of the selenium.webdriver.common.by class.
+        Name (str): The name of the locator.
 
     Raises:
-    ValueError: If the locator prefix is invalid.
+        ValueError: If the locator prefix is invalid.
     """
     # Do not convert if the element is already a locator (tuple)
     if isinstance(element, tuple):
