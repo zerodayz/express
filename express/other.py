@@ -7,6 +7,11 @@ from express import utils
 
 
 class Base:
+    def __init__(self):
+        self.test_dir = None
+        self.password = None
+        self.username = None
+
     def set_credentials(self, username, password):
         """
         Sets the username and password for the actions class
