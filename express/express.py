@@ -11,6 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
 from express import utils
+from express import expected_conditions as EC2
 import os
 """
   Constants for the Actions class
@@ -87,7 +88,7 @@ class Actions:
         self.dir_out = os.path.join(BASE_DIR, 'out')
 
     """
-      System methods
+      Validation functions
     """
 
     def set_credentials(self, username, password):
@@ -104,9 +105,6 @@ class Actions:
         
         self.username = username
         self.password = password
-
-    def prepare_tests(self, test_name):
-        self.test_dir = os.path.join(self.dir_out, test_name)
 
     """
       Testing functions
@@ -152,6 +150,68 @@ class Actions:
         try:
             self.wait_for_element_presence(element)
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def scroll_to_bottom_page(self):
+        """
+        This function scrolls to the bottom of the page.
+
+        Params:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def scroll_to_top_page(self):
+        """
+        This function scrolls to the top of the page.
+
+        Params:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            self.driver.execute_script("window.scrollTo(0, 0);")
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def wait_for_element_selected(self, element, timeout=10):
+        """
+        This function waits for the element to be selected.
+
+        Params:
+            element (tuple): The element to wait for.
+            timeout (int): The timeout in seconds.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element = determine_locator(element)
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.element_to_be_selected(element))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -277,13 +337,14 @@ class Actions:
             self.driver.quit()
             raise e
 
-    def wait_for_style(self, element, style, timeout=60):
+    def wait_for_element_attribute(self, element, attribute, value, timeout=60):
         """
-        This function waits for an element to have a specific style.
+        This function waits for an element to have a attribute with a value.
 
         Params:
             element (str): An element locator.
-            style (str): The style to wait for.
+            attribute (str): The name of the attribute.
+            value (str): The value of the attribute.
             timeout (int): The number of seconds to wait before timing out.
 
         Returns:
@@ -294,7 +355,7 @@ class Actions:
         """
         element = determine_locator(element)
         try:
-            WebDriverWait(self.driver, timeout).until(EC.text_to_be_present_in_element(element, style))
+            WebDriverWait(self.driver, timeout).until(EC2.element_attribute_is(element, attribute, value))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
@@ -587,9 +648,7 @@ class Actions:
         """
         element = determine_locator(element)
         try:
-
             self.wait_for_element_clickable(element)
-
             self.driver.find_element(*element).click()
         except Exception as e:
             print("Error: ", e)
