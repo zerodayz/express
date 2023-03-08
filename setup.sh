@@ -47,7 +47,9 @@ echo -e "${YELLOW}Creating files...${NC}"
 
 cat > express/_custom.py << EOF
 class Base:
-
+    """
+    This is your own class. You can add any functions you want to this class, and they will be available to all tests.
+    """
     def __init__(self):
         pass
 
