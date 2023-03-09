@@ -7,26 +7,8 @@ WHITE='\033[0;37m'
 PINK='\033[0;35m'
 NC='\033[0m' # No Color
 
-# Check directory using which run.sh
-DIR=$(dirname $(which run.sh))
 
-pushd "$DIR" >/dev/null || exit 1
-
-# Check we are executed within express directory
-BASEDIR=$(basename $(pwd))
-
-if [ "$BASEDIR" != "express" ]; then
-    echo -e "${RED}Please run this script from the express directory.${NC}"
-    exit 1
-fi
-
-# Check if virtual environment exists
-if [ ! -d .venv ]; then
-    echo -e "${RED}Virtual environment does not exist. Please run setup.sh first.${NC}"
-    exit 1
-fi
-
-if [ $# -eq 0 ]; then
+function help() {
     echo -e "${PINK}  _____  __  __  ____${NC}"
     echo -e "${PINK} | ____| \ \/ / |  _ \\ ${NC}"
     echo -e "${PINK} |  _|    \  /  | |_) |${NC}"
@@ -42,7 +24,8 @@ if [ $# -eq 0 ]; then
     echo -e "   List all available tests."
     echo -e ""
     echo -e "          run.sh -l"
-    echo -e "${WHITE}Listing:${NC}"
+    echo -e ""
+    echo -e "${WHITE}Execution:${NC}"
     echo -e ""
     echo -e "   If you are not in a rush, you can run the tests sequentially on a single browser."
     echo -e ""
@@ -64,6 +47,28 @@ if [ $# -eq 0 ]; then
     echo -e ""
     echo -e "          run.sh -n 9 --browser chrome --browser firefox --ignore '*recaptcha_v2*' test/"
     echo -e ""
+}
+
+# Check directory using which run.sh
+DIR=$(dirname $(which run.sh))
+
+pushd "$DIR" >/dev/null || exit 1
+
+# Check we are executed within express directory
+BASEDIR=$(basename $(pwd))
+
+if [ "$BASEDIR" != "express" ]; then
+    echo -e "${RED}Please run this script from the express directory.${NC}"
+    exit 1
+fi
+
+# Check if virtual environment exists
+if [ ! -d .venv ]; then
+    echo -e "${RED}Virtual environment does not exist. Please run setup.sh first.${NC}"
+    exit 1
+fi
+if [ $# -eq 0 ]; then
+    help
     exit 1
 fi
 
@@ -73,6 +78,10 @@ while [[ $# -gt 0 ]]; do
         -n|--number)
             NUMBER="$2"
             shift
+            shift
+            ;;
+        -h|--help)
+            HELP=true
             shift
             ;;
         -l|--list)
@@ -99,6 +108,11 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+if [ $HELP ]; then
+    help
+    exit 0
+fi
 
 echo -e "${PINK}  _____  __  __  ____${NC}"
 echo -e "${PINK} | ____| \ \/ / |  _ \\ ${NC}"
