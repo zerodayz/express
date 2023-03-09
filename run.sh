@@ -47,6 +47,10 @@ if [ $# -eq 0 ]; then
     echo -e ""
     echo -e "          run.sh -n 2 --browser chrome --browser firefox --headless test/test_example.py"
     echo -e ""
+    echo -e "   If you want to ignore a test, you can use the --ignore option."
+    echo -e ""
+    echo -e "          run.sh -n 9 --browser chrome --browser firefox --ignore test_recaptcha_v3 test/"
+    echo -e ""
     exit 1
 fi
 
@@ -113,7 +117,6 @@ elif [ ! -f "$TEST" ]; then
     echo -e "${RED}Test file does not exist.${NC}"
     exit 1
 fi
-
 
 # Construct pytest command
 PYTEST_CMD="python3 -m pytest"

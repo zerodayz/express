@@ -112,14 +112,13 @@ class Other:
             self.driver.quit()
             raise e
 
-    def login(self, url, username=None, password=None,
+    def login(self, username=None, password=None,
               username_locator="name=username", password_locator="name=password",
               submit="name=submit"):
         """
         Logs into the website using the provided username and password
 
         Args:
-            url (str): The URL of the website
             username_locator (str): The locator for the username field
             username (str): The username for authenticating the account
             password_locator (str): The locator for the password field
@@ -132,7 +131,6 @@ class Other:
         Raises:
             Exception: If there is an error while logging in
         """
-        self.go(url)
         if self.username is not None:
             username = self.username
         if self.password is not None:

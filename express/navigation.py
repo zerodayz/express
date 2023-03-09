@@ -20,7 +20,6 @@ class Navigation:
             Exception: If there was an error loading the page.
         """
         self.driver.get(url)
-        # wait for the page to load
         try:
             self.wait_for_element_presence((By.TAG_NAME, 'body'))
 
