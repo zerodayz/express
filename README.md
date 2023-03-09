@@ -24,16 +24,20 @@ This is a framework for Selenium tests written in Python. It is based on Seleniu
 ## Prepare the environment
 
 ```text
-chmod +x setup.sh && ./setup.sh
+chmod +x express-install && ./express-install
 ```
 You should see:
 
 ```text
 ...
-Requirements installed.
 Done!
 
-Run './express-run' to learn how to run the tests.
+Please restart your shell or run:
+    source /Users/rcernin/.zshrc
+
+To get familiar with express execute:
+    express-run -h
+
 ```
 
 ## Combination with Selenium IDE
