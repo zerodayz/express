@@ -23,10 +23,26 @@ class Express:
     def _init_driver(self, browser_to_run, headless, caplog):
         """Create a driver instance based on the browser to run."""
 
-        services = {
-            'chrome': ChromeService(ChromeDriverManager().install()),
-            'firefox': FirefoxService(GeckoDriverManager().install())
-        }
+        # It seems that the ChromeDriverManager().install() although loading drivers from cache,
+        # still talk to GitHub API and for the latest version of the driver. This exhausts the API request limit.
+
+        chrome_driver_path = ChromeDriverManager().driver_cache.find_driver(ChromeDriverManager().driver)
+        logging.getLogger().info(f'Chrome driver path: {chrome_driver_path}')
+        firefox_driver_path = GeckoDriverManager().driver_cache.find_driver(GeckoDriverManager().driver)
+        logging.getLogger().info(f'Firefox driver path: {firefox_driver_path}')
+
+        # set the services to use the drivers from cache or download them if not found
+        services = {}
+        if chrome_driver_path:
+            services['chrome'] = ChromeService(chrome_driver_path)
+        else:
+            services['chrome'] = ChromeService(ChromeDriverManager().install())
+
+        if firefox_driver_path:
+            services['firefox'] = FirefoxService(firefox_driver_path)
+        else:
+            services['firefox'] = FirefoxService(GeckoDriverManager().install())
+
         options = {
             'chrome': webdriver.ChromeOptions(),
             'firefox': webdriver.FirefoxOptions()
