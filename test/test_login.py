@@ -1,19 +1,8 @@
 import pytest as pytest
+from express import utils
 
 
-@pytest.mark.parametrize(
-    "credentials",
-    [
-        {
-            "username": "demo",
-            "password": "demo"
-        },
-        {
-            "username": "admin",
-            "password": "admin"
-        }
-    ],
-)
+@pytest.mark.parametrize('credentials', utils.load_json('accounts.json'))
 def test_login(actions, credentials):
     actions.set_credentials(credentials["username"], credentials["password"])
 
