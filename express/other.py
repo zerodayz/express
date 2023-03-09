@@ -2,6 +2,8 @@ import json
 import os
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from express import utils
 
@@ -133,12 +135,12 @@ class Other:
             username = self.username
         if self.password is not None:
             password = self.password
-        self.type(username_locator, username)
-        self.type(password_locator, password)
-        self.click(submit)
-        # wait for the page to load
         try:
-            self.wait_for_element_presence((By.TAG_NAME, 'body'))
+            old_page = self.driver.find_element(by=By.TAG_NAME, value='body')
+            self.type(username_locator, username)
+            self.type(password_locator, password)
+            self.click(submit)
+            WebDriverWait(self.driver, 60).until(EC.staleness_of(old_page))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()

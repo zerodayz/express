@@ -1,3 +1,5 @@
+import contextlib
+import logging
 import random
 import time
 
@@ -121,12 +123,14 @@ class Waiting:
             self.driver.quit()
             raise e
 
-    def wait_for_page_to_load(self, url):
+    @contextlib.contextmanager
+    def wait_for_page_to_load(self, timeout=60):
         """
-        This function checks if the current page URL is the same as the given URL.
+        This function checks if the page loaded. It only works for non-javascript click.
+        Meaning you need to get the new html element after the click.
 
         Params:
-            url (str): The URL to check.
+            None
 
         Returns:
             None
@@ -135,10 +139,9 @@ class Waiting:
             Exception: In case of any error.
         """
         try:
-            old_page = self.driver.find_element(by=By.TAG_NAME, value='body')
-            WebDriverWait(self.driver, 60).until(EC.url_to_be(url))
-            # check if the new webpage was loaded
-            WebDriverWait(self.driver, 60).until(EC.staleness_of(old_page))
+            old_page = self.driver.find_element(By.TAG_NAME, "body")
+            yield
+            WebDriverWait(self.driver, timeout).until(EC.staleness_of(old_page))
 
         except Exception as e:
             print("Error: ", e)

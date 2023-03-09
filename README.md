@@ -33,7 +33,7 @@ You should see:
 Requirements installed.
 Done!
 
-Run 'source .venv/bin/activate' to activate the virtual environment.
+Run './run.sh' to learn how to run the tests.
 ```
 
 ## Combination with Selenium IDE

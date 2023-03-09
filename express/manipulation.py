@@ -1,3 +1,5 @@
+import logging
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
@@ -20,6 +22,7 @@ class Manipulation:
             Exception: If element not found or if any exception occurs
         """
         element = self.determine_locator(element)
+        logging.getLogger().info("Clicking on element: {}".format(element))
         try:
             self.wait_for_element_clickable(element)
             self.driver.find_element(*element).click()
@@ -138,6 +141,7 @@ class Manipulation:
         element = self.determine_locator(element)
         try:
             self.wait_for_element_presence(element)
+            self.driver.find_element(*element).clear()
             self.driver.find_element(*element).send_keys(text)
         except Exception as e:
             print("Error: ", e)
