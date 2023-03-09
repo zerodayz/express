@@ -79,6 +79,7 @@ class Other:
                     self.driver.find_element(*element).screenshot(filepath)
                     self.remove_highlight(highlight_element, style=original_style)
                 else:
+                    element = self.determine_locator(element)
                     self.driver.find_element(*element).screenshot(filepath)
 
             # annotate the screenshot
