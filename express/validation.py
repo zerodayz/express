@@ -19,25 +19,3 @@ class Validation:
         if not style.endswith(";"):
             style = style + ";"
         return style
-
-    def get_style(self, element):
-        """
-        This function gets the style of an element.
-
-        Params:
-            element (str): An element locator.
-
-        Returns:
-            str: The style of the element.
-
-        Raises:
-            Exception: In case of any error.
-        """
-        locator = self.determine_locator(element)
-        try:
-            self.wait_for_presence_of_element(locator)
-            return self.driver.find_element(*locator).get_attribute("style")
-        except Exception as e:
-            print("Error: ", e)
-            self.driver.quit()
-            raise e

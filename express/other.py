@@ -62,22 +62,22 @@ class Other:
                 if highlight and highlight_element:
                     highlight_element = self.determine_locator(highlight_element)
                     # save the original style of the element
-                    original_style = self.get_style(highlight_element)
+                    original_style = self.style_get_attribute(highlight_element)
 
-                    self.highlight(highlight_element, style=highlight_style)
+                    self.style_highlight(highlight_element, style=highlight_style)
                     self.driver.save_screenshot(filepath)
-                    self.remove_highlight(highlight_element, style=original_style)
+                    self.style_remove_highlight(highlight_element, style=original_style)
                 else:
                     self.driver.save_screenshot(filepath)
             else:
                 if highlight and highlight_element:
                     highlight_element = self.determine_locator(highlight_element)
                     # save the original style of the element
-                    original_style = self.get_style(highlight_element)
+                    original_style = self.style_get_attribute(highlight_element)
 
-                    self.highlight(highlight_element, style=highlight_style)
+                    self.style_highlight(highlight_element, style=highlight_style)
                     self.driver.find_element(*element).screenshot(filepath)
-                    self.remove_highlight(highlight_element, style=original_style)
+                    self.style_remove_highlight(highlight_element, style=original_style)
                 else:
                     element = self.determine_locator(element)
                     self.wait_for_visibility_of_element(element)
@@ -136,9 +136,9 @@ class Other:
         if self.password is not None:
             password = self.password
         try:
-            self.type(username_locator, username)
-            self.type(password_locator, password)
-            self.click(submit)
+            self.keyboard_type(username_locator, username)
+            self.keyboard_type(password_locator, password)
+            self.mouse_click(submit)
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()

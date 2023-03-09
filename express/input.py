@@ -4,11 +4,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
-from express import utils
 
-
-class Manipulation:
-    def click(self, element):
+class InputMethod:
+    def mouse_click(self, element):
         """
         Click on an element.
 
@@ -31,7 +29,7 @@ class Manipulation:
             self.driver.quit()
             raise e
 
-    def hover(self, element):
+    def mouse_hover(self, element):
         """
         This function hovers to an element on the page and performs an action.
 
@@ -56,7 +54,7 @@ class Manipulation:
             self.driver.quit()
             raise e
 
-    def move_mouse_to_element(self, element):
+    def mouse_move_to_element(self, element):
         """
         This function moves the mouse to the given element.
 
@@ -77,7 +75,7 @@ class Manipulation:
             self.driver.quit()
             raise e
 
-    def move_mouse_to(self, x, y):
+    def mouse_move_to_xy_coordinates(self, x, y):
         """
         This function moves the mouse to the given coordinates.
 
@@ -98,7 +96,7 @@ class Manipulation:
             self.driver.quit()
             raise e
 
-    def drag_and_drop(self, element_from, element_to):
+    def mouse_drag_and_drop(self, element_from, element_to):
         """
         This function drags an element to another element.
 
@@ -124,7 +122,7 @@ class Manipulation:
             self.driver.quit()
             raise e
 
-    def type(self, element, text):
+    def keyboard_type(self, element, text):
         """
         This function will type text into an element on a web page.
 
@@ -143,67 +141,6 @@ class Manipulation:
             self.wait_for_presence_of_element(element)
             self.driver.find_element(*element).clear()
             self.driver.find_element(*element).send_keys(text)
-        except Exception as e:
-            print("Error: ", e)
-            self.driver.quit()
-            raise e
-
-    def remove_highlight(self, element, style=None):
-        """
-        This function clears the highlight from the given element on the web page.
-
-        Args:
-           element (tuple): The highlighted element to be cleared.
-           style (str): The style to use for the highlight.
-
-        Returns:
-           None
-
-        Raises:
-           Exception: If the element is not located on the page.
-        """
-        locator = self.determine_locator(element)
-        # If no style was specified, just reset the style to an empty string.
-        # otherwise, use the style that was specified.
-        if style is None:
-            style = ''
-        else:
-            style = style
-        try:
-            self.wait_for_presence_of_element(locator)
-            self.driver.execute_script("arguments[0].style = arguments[1];",
-                                       self.driver.find_element(*locator), style)
-
-        except Exception as e:
-            print("Error: ", e)
-            self.driver.quit()
-            raise e
-
-    def highlight(self, element, style="border: 2px solid rgb(255, 0, 0);"):
-        """
-        This function highlights the given element on the web page.
-
-        Args:
-           element (tuple): The element to be highlighted.
-           style (str): The style to use for the highlight.
-
-        Returns:
-           None
-
-        Raises:
-           Exception: If the element is not located on the page.
-        """
-        locator = self.determine_locator(element)
-        # validate css style
-        style = self.validate_style(style)
-        try:
-            self.wait_for_presence_of_element(locator)
-            # remove any color transition from the element https://github.com/SeleniumHQ/selenium/issues/11740
-            # and update the element style to the given style
-            self.driver.execute_script("arguments[0].style = arguments[1];",
-                                       self.driver.find_element(*locator),
-                                       style + "transition: none !important;")
-
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()

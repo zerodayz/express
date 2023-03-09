@@ -1,6 +1,6 @@
 import os
 
-from express import identification, manipulation, navigation, other, utils, validation, waiting, _custom
+from express import identification, style, input, navigation, other, utils, validation, waiting, _custom
 
 """
   Constants for the Actions class
@@ -8,8 +8,8 @@ from express import identification, manipulation, navigation, other, utils, vali
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-class Actions(navigation.Navigation, waiting.Waiting, identification.Identification,
-              manipulation.Manipulation, validation.Validation, other.Other, _custom.MyCustomActions):
+class Actions(navigation.Navigation, waiting.Waiting, identification.Identification, input.InputMethod,
+              style.Style, validation.Validation, other.Other, _custom.MyCustomActions):
 
     def __init__(self, driver, caplog):
         self.driver = driver
