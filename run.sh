@@ -180,3 +180,6 @@ then
     echo -e "${RED}Failed to run tests.${NC}"
     exit 1
 fi
+
+echo -e "${GREEN}Tests completed successfully.${NC}"
+exit 0
