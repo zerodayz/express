@@ -75,4 +75,4 @@ fi
 
 echo -e "${GREEN}Done!${NC}"
 echo ""
-echo -e "${GREEN}Run './run.sh' to learn how to run the tests.${NC}"
+echo -e "Run './run.sh' to learn how to run the tests."
