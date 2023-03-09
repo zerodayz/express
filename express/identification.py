@@ -25,7 +25,7 @@ class Identification:
             raise Exception(f"element '{element}' is not of type XPath. Please use XPath element.")
         try:
 
-            self.wait_for_element_presence(element)
+            self.wait_for_presence_of_element(element)
             # find the nearest wrapping element that can be highlighted
             return element[0], element[1] + "/.."
         except Exception as e:

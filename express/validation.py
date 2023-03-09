@@ -35,7 +35,7 @@ class Validation:
         """
         locator = self.determine_locator(element)
         try:
-            self.wait_for_element_presence(locator)
+            self.wait_for_presence_of_element(locator)
             return self.driver.find_element(*locator).get_attribute("style")
         except Exception as e:
             print("Error: ", e)

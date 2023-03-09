@@ -12,7 +12,30 @@ from express import utils
 
 
 class Waiting:
-    def wait_for_element_selected(self, element, timeout=10):
+    def wait_for(self, element, timeout=60, condition=None):
+        """
+        This function waits for the element to match the condition.
+
+        Params:
+            element (tuple): The element to wait for.
+            timeout (int): The timeout in seconds.
+            condition (function): The condition to wait for.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element = self.determine_locator(element)
+        try:
+            WebDriverWait(self.driver, timeout).until(condition(element))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def wait_for_selection_of_element(self, element, timeout=60):
         """
         This function waits for the element to be selected.
 
@@ -26,15 +49,9 @@ class Waiting:
         Raises:
             Exception: In case of any error.
         """
-        element = self.determine_locator(element)
-        try:
-            WebDriverWait(self.driver, timeout).until(EC.element_to_be_selected(element))
-        except Exception as e:
-            print("Error: ", e)
-            self.driver.quit()
-            raise e
+        self.wait_for(element, timeout=timeout, condition=EC.element_located_to_be_selected)
 
-    def wait_between(self, w_min, w_max):
+    def sleep_between(self, w_min, w_max):
         """
         This function waits for a random amount of time between min and max.
 
@@ -55,7 +72,7 @@ class Waiting:
             self.driver.quit()
             raise e
 
-    def wait_for_element_attribute(self, element, attribute, value, timeout=60):
+    def wait_for_attribute_of_element(self, element, attribute, value, timeout=60):
         """
         This function waits for an element to have a attribute with a value.
 
@@ -79,7 +96,7 @@ class Waiting:
             self.driver.quit()
             raise e
 
-    def wait_for_element_visible(self, element, timeout=60):
+    def wait_for_visibility_of_element(self, element, timeout=60):
         """
         This function waits for an element to be visible on the web page.
 
@@ -93,15 +110,9 @@ class Waiting:
         Raises:
             Exception: In case of any error.
         """
-        element = self.determine_locator(element)
-        try:
-            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(element))
-        except Exception as e:
-            print("Error: ", e)
-            self.driver.quit()
-            raise e
+        self.wait_for(element, timeout=timeout, condition=EC.visibility_of_element_located)
 
-    def wait_for_element_presence(self, element, timeout=60):
+    def wait_for_presence_of_element(self, element, timeout=60):
         """
         This function waits for an element to be present on the web page.
 
@@ -115,15 +126,9 @@ class Waiting:
         Raises:
             Exception: In case of any error.
         """
-        element = self.determine_locator(element)
-        try:
-            WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(element))
-        except Exception as e:
-            print("Error: ", e)
-            self.driver.quit()
-            raise e
+        self.wait_for(element, timeout=timeout, condition=EC.presence_of_element_located)
 
-    def wait_for_element_clickable(self, element, timeout=60):
+    def wait_for_clickable_element(self, element, timeout=60):
         """
         This function waits for an element to be clickable on the web page.
 
@@ -137,13 +142,7 @@ class Waiting:
         Raises:
             Exception: In case of any error.
         """
-        element = self.determine_locator(element)
-        try:
-            WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(element))
-        except Exception as e:
-            print("Error: ", e)
-            self.driver.quit()
-            raise e
+        self.wait_for(element, timeout=timeout, condition=EC.element_to_be_clickable)
 
     @contextlib.contextmanager
     def wait_for_page_to_load(self, timeout=60):

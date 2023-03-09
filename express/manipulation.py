@@ -24,7 +24,7 @@ class Manipulation:
         element = self.determine_locator(element)
         logging.getLogger().info("Clicking on element: {}".format(element))
         try:
-            self.wait_for_element_clickable(element)
+            self.wait_for_clickable_element(element)
             self.driver.find_element(*element).click()
         except Exception as e:
             print("Error: ", e)
@@ -46,7 +46,7 @@ class Manipulation:
         """
         element = self.determine_locator(element)
         try:
-            self.wait_for_element_presence(element)
+            self.wait_for_presence_of_element(element)
             # The move_to_element action does not work in Firefox unless the element is scrolled into view.
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
             hover = ActionChains(self.driver).move_to_element(self.driver.find_element(*element))
@@ -140,7 +140,7 @@ class Manipulation:
         """
         element = self.determine_locator(element)
         try:
-            self.wait_for_element_presence(element)
+            self.wait_for_presence_of_element(element)
             self.driver.find_element(*element).clear()
             self.driver.find_element(*element).send_keys(text)
         except Exception as e:
@@ -170,7 +170,7 @@ class Manipulation:
         else:
             style = style
         try:
-            self.wait_for_element_presence(locator)
+            self.wait_for_presence_of_element(locator)
             self.driver.execute_script("arguments[0].style = arguments[1];",
                                        self.driver.find_element(*locator), style)
 
@@ -197,7 +197,7 @@ class Manipulation:
         # validate css style
         style = self.validate_style(style)
         try:
-            self.wait_for_element_presence(locator)
+            self.wait_for_presence_of_element(locator)
             # remove any color transition from the element https://github.com/SeleniumHQ/selenium/issues/11740
             # and update the element style to the given style
             self.driver.execute_script("arguments[0].style = arguments[1];",

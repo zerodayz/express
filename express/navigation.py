@@ -21,7 +21,7 @@ class Navigation:
         """
         self.driver.get(url)
         try:
-            self.wait_for_element_presence((By.TAG_NAME, 'body'))
+            self.wait_for_presence_of_element((By.TAG_NAME, 'body'))
 
         except Exception as e:
             print("Error: ", e)
@@ -43,7 +43,7 @@ class Navigation:
         """
         element = self.determine_locator(element)
         try:
-            self.wait_for_element_presence(element)
+            self.wait_for_presence_of_element(element)
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
             # If the element is at the bottom of the page, scroll a bit lower to make sure it is visible.
             self.driver.execute_script("window.scrollBy(0, 100);")
