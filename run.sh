@@ -97,6 +97,11 @@ echo -e ""
 if [ $LIST ]; then
     echo -e "${YELLOW}Listing test files...${NC}"
     find test -name "test_*.py" -type f
+    echo -e ""
+    echo -e "To run a test file, use the following command:"
+    echo -e ""
+    echo -e "    run.sh <test_file.py>"
+    echo -e ""
     exit 0
 fi
 
