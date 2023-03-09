@@ -7,6 +7,16 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
+
+if [ "$SHELL" = "/bin/zsh" ]; then
+    SHELL_RC="${HOME}/.zshrc"
+elif [ "$SHELL" = "/bin/bash" ]; then
+    SHELL_RC="${HOME}/.bashrc"
+else
+    echo -e "${RED}Unsupported shell. Please use bash or zsh.${NC}"
+    exit 1
+fi
+
 if [ "$BASEDIR" != "express" ]; then
     echo -e "${RED}Please run this script from the express directory.${NC}"
     exit 1
@@ -73,19 +83,18 @@ class MyCustomActions:
 EOF
 fi
 
+if grep -q "export PATH=\$PATH:$(pwd)" "${SHELL_RC}"; then
+    echo -e "${YELLOW}Path already exists in ${SHELL_RC}. Skipping...${NC}"
+else
+    echo -e "${YELLOW}Adding path to ${SHELL_RC}...${NC}"
+    echo "export PATH=\$PATH:$(pwd)" >> "${SHELL_RC}"
+fi
+
 echo -e "${GREEN}Done!${NC}"
 echo ""
-echo -e "Save the following line either in your .bashrc:"
+echo -e "Please restart your shell or run:"
+echo -e "    source ${SHELL_RC}"
 echo ""
-echo -e "    echo 'export PATH=\$PATH:$(pwd)' >> ~/.bashrc"
-echo -e "    source ~/.bashrc"
-echo ""
-echo -e "Or in your .zshrc:"
-echo ""
-echo -e "    echo 'export PATH=\$PATH:$(pwd)' >> ~/.zshrc"
-echo -e "    source ~/.zshrc"
-echo ""
-echo -e "Then you can run the tests from anywhere by typing:"
-echo ""
+echo -e "To use the express execute:"
 echo -e "    run.sh <test_file.py>"
 echo ""
