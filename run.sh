@@ -105,7 +105,7 @@ fi
 
 # Print variables
 echo -e "${YELLOW}Running tests...${NC}"
-echo -e "${GREEN}Number of tests in parallel: $NUMBER${NC}"
+echo -e "${GREEN}Number of cores allocated: $NUMBER${NC}"
 echo -e "${GREEN}Headless: $HEADLESS${NC}"
 echo -e "${GREEN}Browsers: ${BROWSER[@]}${NC}"
 echo -e "${GREEN}Test file: $TEST${NC}"
