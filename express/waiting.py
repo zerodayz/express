@@ -79,6 +79,28 @@ class Waiting:
             self.driver.quit()
             raise e
 
+    def wait_for_element_visible(self, element, timeout=60):
+        """
+        This function waits for an element to be visible on the web page.
+
+        Params:
+            element (str): An element locator.
+            timeout (int): The number of seconds to wait before timing out.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element = self.determine_locator(element)
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(element))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
     def wait_for_element_presence(self, element, timeout=60):
         """
         This function waits for an element to be present on the web page.

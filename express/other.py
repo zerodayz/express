@@ -80,6 +80,7 @@ class Other:
                     self.remove_highlight(highlight_element, style=original_style)
                 else:
                     element = self.determine_locator(element)
+                    self.wait_for_element_visible(element)
                     self.driver.find_element(*element).screenshot(filepath)
 
             # annotate the screenshot

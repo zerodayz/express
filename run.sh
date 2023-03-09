@@ -106,11 +106,14 @@ echo -e "${GREEN}Headless: $HEADLESS${NC}"
 echo -e "${GREEN}Browsers: ${BROWSER[@]}${NC}"
 echo -e "${GREEN}Test file: $TEST${NC}"
 
-# Check if test file exists
-if [ ! -f "$TEST" ]; then
+# Check if test file is directory
+if [ -d "$TEST" ]; then
+    echo -e "${GREEN}Test file is a directory.${NC}"
+elif [ ! -f "$TEST" ]; then
     echo -e "${RED}Test file does not exist.${NC}"
     exit 1
 fi
+
 
 # Construct pytest command
 PYTEST_CMD="python3 -m pytest"
