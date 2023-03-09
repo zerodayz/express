@@ -62,6 +62,10 @@ while [[ $# -gt 0 ]]; do
             shift
             shift
             ;;
+        -l|--list)
+            LIST=true
+            shift
+            ;;
         --browser)
             BROWSER+=("$2")
             shift
@@ -89,6 +93,12 @@ echo -e "${PINK} |  _|    \  /  | |_) |${NC}"
 echo -e "${PINK} | |___   /  \  |  __/${NC}"
 echo -e "${PINK} |_____| /_/\_\ |_|${NC}   The Express Framework for Selenium"
 echo -e ""
+
+if [ $LIST ]; then
+    echo -e "${YELLOW}Listing test files...${NC}"
+    find test -name "*.py" -type f
+    exit 0
+fi
 
 # Activate virtual environment
 echo -e "${YELLOW}Activating virtual environment...${NC}"
