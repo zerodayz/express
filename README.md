@@ -70,7 +70,26 @@ run.sh -n 2 --browser chrome --browser firefox test/test_example.py
 run.sh -n 2 --browser chrome --browser firefox --headless test/test_example.py
 ```
 
-This can shorten the time of testings up to 3 times.
+## Parallelism
+
+For example if I execute `test/test_login.py` with 2 browsers and two accounts.
+
+```bash
+./run.sh --headless --browser chrome --browser firefox test/test_dropdown.py
+```
+It will factually run 2 tests per browser, so 4 tests in total.
+
+The time is *17.01s* for these 4 tests. 
+
+Now if instead I use `-n 4` to run 4 tests in parallel.
+
+```bash
+./run.sh --headless -n 4 --browser chrome --browser firefox test/test_login.py
+```
+
+The time is *8.42s* for the same 4 tests.
+
+It is good improvement if you have too many tests to run.
 
 ## Collaborate
 
