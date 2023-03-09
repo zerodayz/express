@@ -1,5 +1,8 @@
-from express import utils
+import contextlib
+import logging
+
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class Identification:
@@ -32,6 +35,26 @@ class Identification:
             print("Error: ", e)
             self.driver.quit()
             raise e
+
+    def check_if_element_exists(self, element):
+        """
+        This function checks if an element exists on the page.
+
+        Args:
+            element (string): String representing the element to be checked
+
+        Returns:
+            bool: True if element exists, False otherwise
+
+        Raises:
+            Exception: If element not found or if any exception occurs
+        """
+        try:
+            self.wait_for(element, timeout=10, condition=EC.presence_of_element_located)
+            return True
+        except Exception as e:
+            print("Error handled: ", e)
+            return False
 
     @staticmethod
     def determine_locator(element):
