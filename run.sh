@@ -49,7 +49,7 @@ if [ $# -eq 0 ]; then
     echo -e ""
     echo -e "   If you want to ignore a test, you can use the --ignore option."
     echo -e ""
-    echo -e "          run.sh -n 9 --browser chrome --browser firefox --ignore test_recaptcha_v3 test/"
+    echo -e "          run.sh -n 9 --browser chrome --browser firefox --ignore '*recaptcha_v2*' test/"
     echo -e ""
     exit 1
 fi
@@ -64,6 +64,11 @@ while [[ $# -gt 0 ]]; do
             ;;
         --browser)
             BROWSER+=("$2")
+            shift
+            shift
+            ;;
+        --ignore)
+            IGNORE+=("$2")
             shift
             shift
             ;;
@@ -108,6 +113,7 @@ echo -e "${YELLOW}Running tests...${NC}"
 echo -e "${GREEN}Number of cores allocated: $NUMBER${NC}"
 echo -e "${GREEN}Headless: $HEADLESS${NC}"
 echo -e "${GREEN}Browsers: ${BROWSER[@]}${NC}"
+echo -e "${GREEN}Ignore: ${IGNORE[@]}${NC}"
 echo -e "${GREEN}Test file: $TEST${NC}"
 
 # Check if test file is directory
@@ -128,6 +134,9 @@ if $HEADLESS; then
 fi
 for browser in "${BROWSER[@]}"; do
     PYTEST_CMD="$PYTEST_CMD --browser=$browser"
+done
+for ignore in "${IGNORE[@]}"; do
+    PYTEST_CMD="$PYTEST_CMD --ignore-glob=$ignore"
 done
 PYTEST_CMD="$PYTEST_CMD $TEST"
 
