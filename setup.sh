@@ -75,5 +75,4 @@ fi
 
 echo -e "${GREEN}Done!${NC}"
 echo ""
-echo "Run 'source .venv/bin/activate' to activate the virtual environment."
 echo -e "${GREEN}Run './run.sh' to learn how to run the tests.${NC}"
