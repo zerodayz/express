@@ -16,7 +16,7 @@ function help() {
     echo -e "${PINK} |_____| /_/\_\ |_|${NC}   The Express Framework for Selenium"
     echo -e ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo -e "          express-run -n|--number <tests_in_parallel> --headless --browser <browser1> --browser <browser2> <test_file.py>"
+    echo -e "          express-run -n|--number <tests_in_parallel> -H|--headless -b|--browser <browser1> -b|--browser <browser2> <test_file.py>"
     echo -e "${WHITE}EXAMPLES:${NC}"
     echo -e ""
     echo -e "${WHITE}Listing:${NC}"
@@ -88,17 +88,17 @@ while [[ $# -gt 0 ]]; do
             LIST=true
             shift
             ;;
-        --browser)
+        -b|--browser)
             BROWSER+=("$2")
             shift
             shift
             ;;
-        --ignore)
+        -i|--ignore)
             IGNORE+=("$2")
             shift
             shift
             ;;
-        --headless)
+        -H|--headless)
             HEADLESS=true
             shift
             ;;

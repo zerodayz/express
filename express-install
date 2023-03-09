@@ -53,12 +53,10 @@ then
 fi
 echo -e "${GREEN}Requirements installed.${NC}"
 
-echo -e "${YELLOW}Creating files...${NC}"
-
 if [ -f express/_custom.py ]; then
     echo -e "${YELLOW}Custom file already exists. Skipping...${NC}"
 else
-    echo -e "${YELLOW}Creating custom file...${NC}"
+    echo -e "${GREEN}Creating custom file...${NC}"
 cat > express/_custom.py << EOF
 class MyCustomActions:
     """
@@ -86,8 +84,30 @@ fi
 if grep -q "export PATH=\$PATH:$(pwd)" "${SHELL_RC}"; then
     echo -e "${YELLOW}Path already exists in ${SHELL_RC}. Skipping...${NC}"
 else
-    echo -e "${YELLOW}Adding path to ${SHELL_RC}...${NC}"
+    echo -e "${GREEN}Adding path to ${SHELL_RC}...${NC}"
     echo "export PATH=\$PATH:$(pwd)" >> "${SHELL_RC}"
+fi
+
+# enable powerful shell completion for zsh
+if [ "$SHELL" = "/bin/zsh" ]; then
+    if grep -q "autoload -U compinit && compinit" "${SHELL_RC}"; then
+        echo -e "${YELLOW}Shell completion already enabled. Skipping...${NC}"
+    else
+        echo -e "${GREEN}Enabling shell completion...${NC}"
+        echo "autoload -U compinit && compinit" >> "${SHELL_RC}"
+    fi
+    if grep -q "source $(pwd)/express-completion.zsh" "${SHELL_RC}"; then
+        echo -e "${YELLOW}Autocomplete already exists in ${SHELL_RC}. Skipping...${NC}"
+    else
+        echo -e "${GREEN}Adding autocomplete to ${SHELL_RC}...${NC}"
+        echo "source $(pwd)/express-completion.zsh" >> "${SHELL_RC}"
+    fi
+    if grep -q "zstyle ':completion:\*' menu select" "${SHELL_RC}"; then
+        echo -e "${YELLOW}Autocomplete menu select already exists in ${SHELL_RC}. Skipping...${NC}"
+    else
+        echo -e "${GREEN}Adding autocomplete menu select to ${SHELL_RC}...${NC}"
+        echo "zstyle ':completion:*' menu select" >> "${SHELL_RC}"
+    fi
 fi
 
 echo -e "${GREEN}Done!${NC}"

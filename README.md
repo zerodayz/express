@@ -33,7 +33,7 @@ You should see:
 Done!
 
 Please restart your shell or run:
-    source /Users/rcernin/.zshrc
+    source <YOUR_HOME>/<SHELL_RC_FILE>
 
 To get familiar with express execute:
     express-run -h
