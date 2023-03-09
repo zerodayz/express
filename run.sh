@@ -148,8 +148,13 @@ echo -e "${GREEN}Test file: $TEST${NC}"
 if [ -d "$TEST" ]; then
     echo -e "${GREEN}Test file is a directory.${NC}"
 elif [ ! -f "$TEST" ]; then
-    echo -e "${RED}Test file does not exist.${NC}"
-    exit 1
+    # Check if test file exists inside test directory
+    if [ -f "test/$TEST" ]; then
+        TEST="test/$TEST"
+    else
+        echo -e "${RED}Test file does not exist.${NC}"
+        exit 1
+    fi
 fi
 
 # Construct pytest command
