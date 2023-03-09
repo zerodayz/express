@@ -7,8 +7,14 @@ WHITE='\033[0;37m'
 PINK='\033[0;35m'
 NC='\033[0m' # No Color
 
-# Check we are executed within expres directory
+# Check directory using which run.sh
+DIR=$(dirname $(which run.sh))
+
+pushd "$DIR" >/dev/null || exit 1
+
+# Check we are executed within express directory
 BASEDIR=$(basename $(pwd))
+
 if [ "$BASEDIR" != "express" ]; then
     echo -e "${RED}Please run this script from the express directory.${NC}"
     exit 1
@@ -30,6 +36,13 @@ if [ $# -eq 0 ]; then
     echo -e "${WHITE}USAGE:${NC}"
     echo -e "          run.sh -n|--number <tests_in_parallel> --headless --browser <browser1> --browser <browser2> <test_file.py>"
     echo -e "${WHITE}EXAMPLES:${NC}"
+    echo -e ""
+    echo -e "${WHITE}Listing:${NC}"
+    echo -e ""
+    echo -e "   List all available tests."
+    echo -e ""
+    echo -e "          run.sh -l"
+    echo -e "${WHITE}Listing:${NC}"
     echo -e ""
     echo -e "   If you are not in a rush, you can run the tests sequentially on a single browser."
     echo -e ""
