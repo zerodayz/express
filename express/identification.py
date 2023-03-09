@@ -36,7 +36,7 @@ class Identification:
             self.driver.quit()
             raise e
 
-    def check_if_element_exists(self, element):
+    def element_exists(self, element):
         """
         This function checks if an element exists on the page.
 
