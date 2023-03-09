@@ -136,11 +136,9 @@ class Other:
         if self.password is not None:
             password = self.password
         try:
-            old_page = self.driver.find_element(by=By.TAG_NAME, value='body')
             self.type(username_locator, username)
             self.type(password_locator, password)
             self.click(submit)
-            WebDriverWait(self.driver, 60).until(EC.staleness_of(old_page))
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
