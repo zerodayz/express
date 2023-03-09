@@ -96,7 +96,7 @@ echo -e ""
 
 if [ $LIST ]; then
     echo -e "${YELLOW}Listing test files...${NC}"
-    find test -name "*.py" -type f
+    find test -name "test_*.py" -type f
     exit 0
 fi
 
