@@ -45,6 +45,8 @@ class Navigation:
         try:
             self.wait_for_element_presence(element)
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
+            # If the element is at the bottom of the page, scroll a bit lower to make sure it is visible.
+            self.driver.execute_script("window.scrollBy(0, 100);")
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
