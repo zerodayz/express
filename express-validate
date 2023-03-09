@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This script is used to validate the code style of the project.
+
+# Check directory using which express-validate
+DIR=$(dirname $(which express-validate))
+
+pushd "$DIR" >/dev/null || exit 1
+
+# Check we are executed within express directory
+BASEDIR=$(basename $(pwd))
+
+if [ "$BASEDIR" != "express" ]; then
+    echo -e "${RED}Please run this script from the express directory.${NC}"
+    exit 1
+fi
+
