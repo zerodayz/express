@@ -28,6 +28,86 @@ class Navigation:
             self.driver.quit()
             raise e
 
+    def scroll_down_by_y(self, y):
+        """
+        This function scrolls down by a given amount.
+
+        Params:
+            y (int): The amount to scroll down by.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            self.driver.execute_script("window.scrollBy(0, {});".format(y))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def scroll_up_by_y(self, y):
+        """
+        This function scrolls up by a given amount.
+
+        Params:
+            y (int): The amount to scroll up by.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            self.driver.execute_script("window.scrollBy(0, -{});".format(y))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def scroll_left_by_x(self, x):
+        """
+        This function scrolls left by a given amount.
+
+        Params:
+            x (int): The amount to scroll left by.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            self.driver.execute_script("window.scrollBy(-{}, 0);".format(x))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def scroll_right_by_x(self, x):
+        """
+        This function scrolls right by a given amount.
+
+        Params:
+            x (int): The amount to scroll right by.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            self.driver.execute_script("window.scrollBy({}, 0);".format(x))
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
     def scroll_into_element(self, element):
         """
         This function is waiting for it to be present before executing the script.
@@ -45,8 +125,6 @@ class Navigation:
         try:
             self.wait_for_presence_of_element(element)
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
-            # If the element is at the bottom of the page, scroll a bit lower to make sure it is visible.
-            self.driver.execute_script("window.scrollBy(0, 100);")
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
