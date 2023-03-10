@@ -27,7 +27,7 @@ class Waiting:
         Raises:
             Exception: In case of any error.
         """
-        element = self.determine_locator(element)
+        element = self.find_locator(element)
         try:
             WebDriverWait(self.driver, timeout).until(condition(element))
         except Exception as e:
@@ -88,7 +88,7 @@ class Waiting:
         Raises:
             Exception: In case of any error.
         """
-        element = self.determine_locator(element)
+        element = self.find_locator(element)
         try:
             WebDriverWait(self.driver, timeout).until(EC2.element_attribute_is(element, attribute, value))
         except Exception as e:

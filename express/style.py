@@ -12,7 +12,7 @@ class Style:
         Raises:
             Exception: In case of any error.
         """
-        locator = self.determine_locator(element)
+        locator = self.find_locator(element)
         try:
             self.wait_for_presence_of_element(locator)
             return self.driver.find_element(*locator).get_attribute("style")
@@ -35,7 +35,7 @@ class Style:
         Raises:
            Exception: If the element is not located on the page.
         """
-        locator = self.determine_locator(element)
+        locator = self.find_locator(element)
         # If no style was specified, just reset the style to an empty string.
         # otherwise, use the style that was specified.
         if style is None:
@@ -66,7 +66,7 @@ class Style:
         Raises:
            Exception: If the element is not located on the page.
         """
-        locator = self.determine_locator(element)
+        locator = self.find_locator(element)
         # validate css style
         style = self.validate_style(style)
         try:

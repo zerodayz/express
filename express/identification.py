@@ -20,7 +20,7 @@ class Identification:
         Raises:
             Exception: If element not found or if any exception occurs
         """
-        element = self.determine_locator(element)
+        element = self.find_locator(element)
         # Check the element is type XPath
         if element[0] != "xpath":
             self.driver.quit()
@@ -57,7 +57,7 @@ class Identification:
             return False
 
     @staticmethod
-    def determine_locator(element):
+    def find_locator(element):
         """
         This function determines the locator used to find an element on a web page.
 

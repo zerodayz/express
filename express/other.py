@@ -60,7 +60,7 @@ class Other:
             # if the element is the body, take a screenshot of the whole page
             if element == "tag=body":
                 if highlight and highlight_element:
-                    highlight_element = self.determine_locator(highlight_element)
+                    highlight_element = self.find_locator(highlight_element)
                     # save the original style of the element
                     original_style = self.style_get_attribute(highlight_element)
 
@@ -71,7 +71,7 @@ class Other:
                     self.driver.save_screenshot(filepath)
             else:
                 if highlight and highlight_element:
-                    highlight_element = self.determine_locator(highlight_element)
+                    highlight_element = self.find_locator(highlight_element)
                     # save the original style of the element
                     original_style = self.style_get_attribute(highlight_element)
 
@@ -79,7 +79,7 @@ class Other:
                     self.driver.find_element(*element).screenshot(filepath)
                     self.style_remove_highlight(highlight_element, style=original_style)
                 else:
-                    element = self.determine_locator(element)
+                    element = self.find_locator(element)
                     self.wait_for_visibility_of_element(element)
                     self.driver.find_element(*element).screenshot(filepath)
 

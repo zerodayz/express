@@ -19,7 +19,7 @@ class InputMethod:
         Raises:
             Exception: If element not found or if any exception occurs
         """
-        element = self.determine_locator(element)
+        element = self.find_locator(element)
         logging.getLogger().info("Clicking on element: {}".format(element))
         try:
             self.wait_for_clickable_element(element)
@@ -42,7 +42,7 @@ class InputMethod:
         Raises:
             Exception: If any error occurs.
         """
-        element = self.determine_locator(element)
+        element = self.find_locator(element)
         try:
             self.wait_for_presence_of_element(element)
             # The move_to_element action does not work in Firefox unless the element is scrolled into view.
@@ -67,7 +67,7 @@ class InputMethod:
         Raises:
             Exception: In case of any error.
         """
-        element = self.determine_locator(element)
+        element = self.find_locator(element)
         try:
             ActionChains(self.driver).move_to_element(self.driver.find_element(*element)).perform()
         except Exception as e:
@@ -110,8 +110,8 @@ class InputMethod:
         Raises:
             Exception: In case of any error.
         """
-        element_from = self.determine_locator(element_from)
-        element_to = self.determine_locator(element_to)
+        element_from = self.find_locator(element_from)
+        element_to = self.find_locator(element_to)
         try:
             WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element_from))
             WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(element_to))
@@ -136,7 +136,7 @@ class InputMethod:
         Raises:
             Exception: In case of any error.
         """
-        element = self.determine_locator(element)
+        element = self.find_locator(element)
         try:
             self.wait_for_presence_of_element(element)
             self.driver.find_element(*element).clear()
