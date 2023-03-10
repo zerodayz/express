@@ -16,7 +16,7 @@ function help() {
     echo -e "${PINK} |_____| /_/\_\ |_|${NC}   The Express Framework for Selenium"
     echo -e ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo -e "          express-run -n|--number <tests_in_parallel> -H|--headless -b|--browser <browser1> -b|--browser <browser2> <test_file.py>"
+    echo -e "          express-run -n|--number <tests_in_parallel> -H|--headless -b|--browser <browser1> -b|--browser <browser2> <test_file.py> <file.rsc>"
     echo -e "${WHITE}EXAMPLES:${NC}"
     echo -e ""
     echo -e "${WHITE}Listing:${NC}"
@@ -124,10 +124,11 @@ echo -e ""
 if [ $LIST ]; then
     echo -e "${YELLOW}Listing test files...${NC}"
     find test -name "test_*.py" -type f
+    find test -name "*.rsc" -type f
     echo -e ""
     echo -e "To run a test file, use the following command:"
     echo -e ""
-    echo -e "    express-run <test_file.py>"
+    echo -e "    express-run <test_file.py>|<file.rsc>"
     echo -e ""
     exit 0
 fi
@@ -157,6 +158,20 @@ echo -e "${GREEN}Headless: $HEADLESS${NC}"
 echo -e "${GREEN}Browsers: ${BROWSER[@]}${NC}"
 echo -e "${GREEN}Ignore: ${IGNORE[@]}${NC}"
 echo -e "${GREEN}Test file: $TEST${NC}"
+
+# Check if the test file ends with rsc
+if [[ "$TEST" == *.rsc ]]; then
+    # Run code-gen to create a test file
+    if ! python3 code-gen.py "$TEST"
+    then
+        echo -e "${RED}Failed to generate test file.${NC}"
+        exit 1
+    fi
+    echo -e "${GREEN}Test file generated.${NC}"
+    # Set test file to generated file
+    TEST="test/test_$(basename "$TEST" .rsc).py"
+fi
+
 
 # Check if test file is directory
 if [ -d "$TEST" ]; then
