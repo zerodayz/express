@@ -4,7 +4,9 @@ import sys
 def action_code_generator(code):
     keywords = {
         "Open Page": "actions.go",
+        "Login Wait Page Load": "with actions.wait_for_page_to_load():\n        actions.login",
         "Click On": "actions.mouse_click",
+        "Click On Wait Page Load": "with actions.wait_for_page_to_load():\n        actions.mouse_click",
         "Take Screenshot": "actions.take_screenshot",
     }
     lines = code.splitlines()
@@ -18,7 +20,7 @@ def action_code_generator(code):
         for keyword, function in keywords.items():
             if keyword in line:
                 line = line.replace(keyword, "").strip()
-                line = [f"\"{word.strip()}\"" for word in line.split(",")]
+                line = [f"{word.strip()}" for word in line.split(",")]
                 line = ", ".join(line)
                 line = "    " + function + "(" + line + ")"
                 output += line + "\n"
