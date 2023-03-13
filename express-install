@@ -22,9 +22,9 @@ if [ "$BASEDIR" != "express" ]; then
     exit 1
 fi
 
-if [ ! -d .venv ]; then
+if [ ! -d venv ]; then
     echo -e "${YELLOW}Setting up virtual environment...${NC}"
-    if ! python3 -m venv .venv
+    if ! python3 -m venv venv
     then
         echo -e "${RED}Failed to create virtual environment.${NC}"
         exit 1
@@ -33,7 +33,7 @@ if [ ! -d .venv ]; then
 fi
 
 echo -e "${YELLOW}Activating virtual environment...${NC}"
-if ! source .venv/bin/activate
+if ! source venv/bin/activate
 then
     echo -e "${RED}Failed to activate virtual environment.${NC}"
     exit 1
