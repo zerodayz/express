@@ -22,6 +22,15 @@ if [ "$BASEDIR" != "express" ]; then
     exit 1
 fi
 
+echo -e "${YELLOW}Updating express...${NC}"
+if ! git pull
+then
+    echo -e "${RED}Failed to update git.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}Express updated.${NC}"
+
 if [ ! -d venv ]; then
     echo -e "${YELLOW}Setting up virtual environment...${NC}"
     if ! python3 -m venv venv
