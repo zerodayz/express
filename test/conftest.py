@@ -34,7 +34,7 @@ class Express:
             # check the last timestamp of the driver in cache
             if metadata_items:
                 # sort metadata_path by timestamp
-                sorted_metadata_items = sorted(metadata_items.items(), key=lambda x: x[1]['timestamp'], reverse=True)
+                sorted_metadata_items = sorted(metadata_items.items(), key=lambda x: x[1]['timestamp'])
                 # find the latest driver path which ends with chromedriver
                 for item in sorted_metadata_items:
                     if re.search(r'chromedriver', item[1]['binary_path']):
@@ -50,7 +50,7 @@ class Express:
             # check the last timestamp of the driver in cache
             if metadata_items:
                 # sort metadata_path by timestamp
-                sorted_metadata_items = sorted(metadata_items.items(), key=lambda x: x[1]['timestamp'], reverse=True)
+                sorted_metadata_items = sorted(metadata_items.items(), key=lambda x: x[1]['timestamp'])
                 # get the latest driver path
                 for item in sorted_metadata_items:
                     if re.search(r'geckodriver', item[1]['binary_path']):
