@@ -2,7 +2,6 @@
 .venv
 *.iml
 out
-in
 .DS_Store
 geckodriver.log
 __pycache__/

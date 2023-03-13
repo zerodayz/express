@@ -1,0 +1,12 @@
+{
+  "Set Credentials": "    actions.set_credentials({0})",
+  "Open Page": "    actions.go({0})",
+  "Open Page Wait Page Load": "    with actions.wait_for_page_to_load():\n        actions.go({0})",
+  "Login Wait Page Load": "    with actions.wait_for_page_to_load():\n        actions.login({0})",
+  "Click On": "    actions.mouse_click({0})",
+  "Click On Wait Page Load": "    with actions.wait_for_page_to_load():\n        actions.mouse_click({0})",
+  "Take Screenshot": "    actions.take_screenshot({0})",
+  "Parametrize Test": "import pytest as pytest\nfrom express import utils\n\n\n@pytest.mark.parametrize({0})",
+  "Test Name With Accounts": "def test_{0}(actions, credentials):",
+  "Test Name": "def test_{0}(actions):"
+}

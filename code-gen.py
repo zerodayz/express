@@ -1,41 +1,29 @@
+import json
 import sys
+
+from express import utils
 
 
 def action_code_generator(code):
-    keywords = {
-        "Set Credentials": "actions.set_credentials",
-        "Open Page": "actions.go",
-        "Open Page Wait Page Load": "with actions.wait_for_page_to_load():\n        actions.go",
-        "Login Wait Page Load": "with actions.wait_for_page_to_load():\n        actions.login",
-        "Click On": "actions.mouse_click",
-        "Click On Wait Page Load": "with actions.wait_for_page_to_load():\n        actions.mouse_click",
-        "Take Screenshot": "actions.take_screenshot",
-    }
+    # load keywords from keywrods.json
+    keywords = utils.load_json("keywords.json")
     lines = code.splitlines()
     lines = [line.strip() for line in lines if line]
     output = ""
     for line in lines:
-        if "Parametrize Test Accounts" in line:
-            line = line.replace("Parametrize Test Accounts:", "").strip()
-            line = [f"{word.strip()}" for word in line.split(",")]
-            line = ", ".join(line)
-            line = f"import pytest as pytest\nfrom express import utils\n\n\n@pytest.mark.parametrize({line})"
-            output += line + "\n"
-            continue
-        if "Test Name With Accounts" in line:
-            line = line.replace("Test Name With Accounts:", "").strip()
-            line = f"def test_{line.lower()}(actions, credentials):"
-            output += line + "\n"
-            continue
-        if "Test Name" in line:
-            line = line.replace("Test Name:", "").strip()
-            line = f"def test_{line.lower()}(actions):"
-            output += line + "\n"
-            continue
-        keyword = line.split(":", 1)
-        arguments = keyword[1].strip()
-        if keyword[0] in keywords:
-            line = f"    {keywords[keyword[0]]}({arguments})"
+        line_keyword = []
+        # walk the line and find all words starting by a capital letter
+        words = line.split(" ")
+        for word in words:
+            if word[0].isupper():
+                line_keyword.append(word)
+        keyword = " ".join(line_keyword)
+        # if line starts with keyword
+        if keyword in keywords:
+            # remove the keyword from the line
+            line = line.replace(keyword, "").strip()
+            # replace the keyword with the corresponding code
+            line = keywords[keyword].format(line)
             output += line + "\n"
     return output
 
