@@ -1,6 +1,7 @@
 .idea
 .venv
 *.iml
+in
 out
 .DS_Store
 geckodriver.log

@@ -5,8 +5,9 @@ from express import utils
 
 
 def action_code_generator(code):
-    # load keywords from keywrods.json
-    keywords = utils.load_json("keywords.json")
+    # load keywords from keywords.json
+    with open("keywords.json") as f:
+        keywords = json.load(f)
     lines = code.splitlines()
     lines = [line.strip() for line in lines if line]
     output = ""
