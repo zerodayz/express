@@ -8,5 +8,12 @@
   "Take Screenshot": "    actions.take_screenshot({0})",
   "Parametrize Test": "import pytest as pytest\nfrom express import utils\n\n\n@pytest.mark.parametrize({0})",
   "Test Name With Accounts": "def test_{0}(actions, credentials):",
-  "Test Name": "def test_{0}(actions):"
+  "Test Name": "def test_{0}(actions):",
+  "Scroll To": "    actions.scroll_into_element({0})",
+  "Scroll Down By": "    actions.scroll_down_by_y({0})",
+  "Scroll Up By": "    actions.scroll_down_by_y({0})",
+  "Scroll To Bottom": "    actions.scroll_to_bottom_page()",
+  "Scroll To Top": "    actions.scroll_to_top_page()",
+  "Hover Over": "    actions.mouse_hover({0})",
+  "Type": "    actions.keyboard_type({0})"
 }
