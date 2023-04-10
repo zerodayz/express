@@ -6,19 +6,8 @@ import time
 def test_recaptcha_v2(actions):
     actions.set_user_agent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36")
     actions.go("https://patrickhlauke.github.io/recaptcha/")
-    # First try (Directly)
-    # actions.switch_to_iframe("css=.g-recaptcha iframe")
-    # actions.mouse_click("css=.recaptcha-checkbox-border")
-    # actions.wait_for_presence_of_element("class=recaptcha-checkbox-checked")
-    # actions.switch_to_default_content()
-    # actions.take_screenshot("recaptcha_v2.png")
 
-    # Second try (Keyboard only)
-    # actions.keyboard_press("tab")
-    # actions.keyboard_press("tab")
-    # actions.keyboard_press("enter")
-
-    # Third try (Audio only)
+    # Audio only
     actions.switch_to_iframe("css=.g-recaptcha iframe")
     actions.mouse_hover("css=.recaptcha-checkbox-border")
     actions.mouse_click("css=.recaptcha-checkbox-border")
