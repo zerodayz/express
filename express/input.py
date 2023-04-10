@@ -122,6 +122,26 @@ class InputMethod:
             self.driver.quit()
             raise e
 
+    def keyboard_press(self, key):
+        """
+        This function will press a key on the keyboard.
+
+        Args:
+            key (str): The key to press.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            ActionChains(self.driver).send_keys(key).perform()
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
     def keyboard_type(self, element, text):
         """
         This function will type text into an element on a web page.

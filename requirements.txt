@@ -8,3 +8,5 @@ scipy
 sphinx
 sphinx-markdown-builder
 sphinx-autodoc-typehints
+SpeechRecognition
+soundfile

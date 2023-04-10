@@ -23,49 +23,54 @@ class Express:
     def _init_driver(self, browser_to_run, headless, caplog):
         """Create a driver instance based on the browser to run."""
 
+        services = {
+            'chrome': ChromeService(ChromeDriverManager().install()),
+            'firefox': FirefoxService(GeckoDriverManager().install()),
+        }
         # It seems that the ChromeDriverManager().install() although loading drivers from cache,
         # still talk to GitHub API to get the latest version of the driver. This exhausts the API request limit.
-        services = {}
+        # services = {}
 
         # This is ugly, ugly workaround, but it gets the job done... now.
         # # get driver _get_driver_path
-        if browser_to_run == 'chrome':
-            metadata_items = ChromeDriverManager().driver_cache.get_metadata()
-            # check the last timestamp of the driver in cache
-            if metadata_items:
-                # sort metadata_path by timestamp
-                sorted_metadata_items = sorted(metadata_items.items(), key=lambda x: x[1]['timestamp'])
-                # find the latest driver path which ends with chromedriver
-                for item in sorted_metadata_items:
-                    if re.search(r'chromedriver', item[1]['binary_path']):
-                        chrome_driver_path = item[1]['binary_path']
-                        break
-            if chrome_driver_path:
-                services['chrome'] = ChromeService(chrome_driver_path)
-            else:
-                services['chrome'] = ChromeService(ChromeDriverManager().install())
-            logging.getLogger().info(chrome_driver_path)
-        elif browser_to_run == 'firefox':
-            metadata_items = GeckoDriverManager().driver_cache.get_metadata()
-            # check the last timestamp of the driver in cache
-            if metadata_items:
-                # sort metadata_path by timestamp
-                sorted_metadata_items = sorted(metadata_items.items(), key=lambda x: x[1]['timestamp'])
-                # get the latest driver path
-                for item in sorted_metadata_items:
-                    if re.search(r'geckodriver', item[1]['binary_path']):
-                        firefox_driver_path = item[1]['binary_path']
-                        break
-            if firefox_driver_path:
-                services['firefox'] = FirefoxService(firefox_driver_path)
-            else:
-                services['firefox'] = FirefoxService(GeckoDriverManager().install())
-            logging.getLogger().info(firefox_driver_path)
-
+        # if browser_to_run == 'chrome':
+        #     metadata_items = ChromeDriverManager().driver_cache.get_metadata()
+        #     # check the last timestamp of the driver in cache
+        #     if metadata_items:
+        #         # sort metadata_path by timestamp
+        #         sorted_metadata_items = sorted(metadata_items.items(), key=lambda x: x[1]['timestamp'])
+        #         # find the latest driver path which ends with chromedriver
+        #         for item in sorted_metadata_items:
+        #             if re.search(r'chromedriver', item[1]['binary_path']):
+        #                 chrome_driver_path = item[1]['binary_path']
+        #                 break
+        #     if chrome_driver_path:
+        #         services['chrome'] = ChromeService(chrome_driver_path)
+        #     else:
+        #         services['chrome'] = ChromeService(ChromeDriverManager().install())
+        #     logging.getLogger().info(chrome_driver_path)
+        # elif browser_to_run == 'firefox':
+        #     metadata_items = GeckoDriverManager().driver_cache.get_metadata()
+        #     # check the last timestamp of the driver in cache
+        #     if metadata_items:
+        #         # sort metadata_path by timestamp
+        #         sorted_metadata_items = sorted(metadata_items.items(), key=lambda x: x[1]['timestamp'])
+        #         # get the latest driver path
+        #         for item in sorted_metadata_items:
+        #             if re.search(r'geckodriver', item[1]['binary_path']):
+        #                 firefox_driver_path = item[1]['binary_path']
+        #                 break
+        #     if firefox_driver_path:
+        #         services['firefox'] = FirefoxService(firefox_driver_path)
+        #     else:
+        #         services['firefox'] = FirefoxService(GeckoDriverManager().install())
+        #     logging.getLogger().info(firefox_driver_path)
+        #
         options = {
             'chrome': webdriver.ChromeOptions(),
             'firefox': webdriver.FirefoxOptions()
         }
+
 
         if headless and browser_to_run == 'chrome':
             options[browser_to_run].add_argument('--headless=new')

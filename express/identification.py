@@ -1,5 +1,6 @@
 import contextlib
 import logging
+import random
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -31,6 +32,50 @@ class Identification:
             self.wait_for_presence_of_element(element)
             # find the nearest wrapping element that can be highlighted
             return element[0], element[1] + "/.."
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def set_random_user_agent(self):
+        """
+        This function sets a random user agent for the browser.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Exception: If any error occurs.
+        """
+        user_agents = [
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0",
+        ]
+        try:
+            self.set_user_agent(user_agents[random.randint(0, len(user_agents)) - 1])
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def set_user_agent(self, agent):
+        """
+        This function sets the user agent of the browser.
+
+        Args:
+            agent (string): The user agent to be set.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: If any error occurs.
+        """
+        try:
+            self.driver.execute_script("Object.defineProperty(navigator, 'userAgent', {get: () => '" + agent + "'});")
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()

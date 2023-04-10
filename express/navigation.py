@@ -1,3 +1,5 @@
+import logging
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -165,6 +167,51 @@ class Navigation:
         """
         try:
             self.driver.execute_script("window.scrollTo(0, 0);")
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def get_href(self, locator):
+        """
+        This function gets the href attribute of an element.
+
+        Params:
+            locator (tuple): The locator of the element.
+
+        Returns:
+            str: The href attribute of the element.
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element = self.find_locator(locator)
+        try:
+            self.wait_for_presence_of_element(element)
+            link = self.driver.find_element(*element).get_attribute("href")
+            logging.getLogger().info("Link on element: {}: link {}".format(element, link))
+            return link
+
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+    def switch_to_frame(self, frame):
+        """
+        This function switches the web driver to the given frame.
+
+        Params:
+            frame (str): The frame to switch to.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        try:
+            self.driver.switch_to.frame(frame)
         except Exception as e:
             print("Error: ", e)
             self.driver.quit()
