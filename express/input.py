@@ -75,6 +75,28 @@ class InputMethod:
             self.driver.quit()
             raise e
 
+    def upload_file(self, element, file_path):
+        """
+        This function uploads a file.
+
+        Args:
+            element (str): The element to upload the file to.
+            file_path (str): The path to the file to upload.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: In case of any error.
+        """
+        element = self.find_locator(element)
+        try:
+            self.driver.find_element(*element).send_keys(file_path)
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
     def mouse_move_to_xy_coordinates(self, x, y):
         """
         This function moves the mouse to the given coordinates.

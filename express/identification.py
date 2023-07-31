@@ -61,6 +61,30 @@ class Identification:
             self.driver.quit()
             raise e
 
+    def get_all_nested_nodes(self, element):
+        """
+        This function gets all the nested nodes of an element.
+
+        Args:
+            element (string): String representing the element to be checked
+
+        Returns:
+            list: A list of all the nested nodes of the element
+
+        Raises:
+            Exception: If element not found or if any exception occurs
+        """
+        element = self.find_locator(element)
+        try:
+            self.wait_for_presence_of_element(element)
+            return self.driver.find_element(*element).find_elements_by_xpath(".//*")
+        except Exception as e:
+            print("Error: ", e)
+            self.driver.quit()
+            raise e
+
+
+
     def set_user_agent(self, agent):
         """
         This function sets the user agent of the browser.
